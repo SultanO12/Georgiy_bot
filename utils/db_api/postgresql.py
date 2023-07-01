@@ -51,6 +51,61 @@ class Database:
         );
         """
         await self.execute(sql, execute=True)
+    
+    async def create_table_chapters(self):
+        sql = """
+        CREATE TABLE IF NOT EXISTS Chapters (
+        id SERIAL PRIMARY KEY,
+        chapter_name VARCHAR(255) NOT NULL
+        );
+        """
+        await self.execute(sql, execute=True)
+    
+    async def add_chapters(self, chapter_name):
+        sql = "INSERT INTO Chapters (chapter_name) VALUES($1) returning *"
+        return await self.execute(sql, chapter_name, fetchrow=True)
+
+    async def select_all_chapters(self):
+        sql = "SELECT * FROM Chapters"
+        return await self.execute(sql, fetch=True)
+    
+    async def create_table_categories(self):
+        sql = """
+        CREATE TABLE IF NOT EXISTS Categories (
+        id SERIAL PRIMARY KEY,
+        cat_name VARCHAR(255) NOT NULL,
+        chapter_id INTEGER NOT NULL
+        );
+        """
+        await self.execute(sql, execute=True)
+    
+    async def create_table_infomation(self):
+        sql = """
+        CREATE TABLE IF NOT EXISTS Infomation (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        caption text NOT NULL,
+        photos text NOT NULL
+        );
+        """
+        await self.execute(sql, execute=True)
+    
+    async def add_infomation(self, title, caption, photos):
+        sql = "INSERT INTO Infomation (title, caption, photos) VALUES($1, $2, $3) returning *"
+        return await self.execute(sql, title, caption, photos, fetchrow=True)
+
+    async def select_all_infomation(self):
+        sql = "SELECT * FROM Infomation"
+        return await self.execute(sql, fetch=True)
+
+
+    async def add_categories(self, cat_name, chapter_id):
+        sql = "INSERT INTO Categories (cat_name, chapter_id) VALUES($1, $2) returning *"
+        return await self.execute(sql, cat_name, chapter_id, fetchrow=True)
+
+    async def select_all_categories(self):
+        sql = "SELECT * FROM Categories"
+        return await self.execute(sql, fetch=True)
 
     @staticmethod
     def format_args(sql, parameters: dict):
