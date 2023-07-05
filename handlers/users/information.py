@@ -95,7 +95,7 @@ async def cheking(call: types.CallbackQuery, state: FSMContext):
 @dp.message_handler(text="🏡 Домики", state='*')
 async def do_homs(message: types.Message, state: FSMContext):
     await state.finish()
-
+    homs_cat_markup = await creat_homs_markup()
     await message.answer("У нас есть, несколько вариантов размещения", reply_markup=homs_cat_markup)
     await GetInfoHoms.home_name.set()
 
@@ -132,8 +132,30 @@ async def do_home_potos(message: types.Message, state: FSMContext):
 @dp.message_handler(text="🥳 Развлечение", state='*')
 async def do_raz(message: types.Message, state: FSMContext):
     await state.finish()
-
+    raz_cat_markup = await creat_markup_raz()
     await message.answer("Развлечения на территории глемпинг-парка «НАЗВАНИЕ»\n\n⛱ Зона отдыха у воды с насыпным песком;\n🏐 Волейбольные площадки;\n🌳 Лесные прогулки;\n🎣 Удочки для рыбалки;\n\nА еще👇", reply_markup=raz_cat_markup)
+    await GetInfoRaz.raz_name.set()
+
+@dp.message_handler(text="🔙 Назад", state=GetInfoRaz.raz_name)
+async def back_5(message: types.Message, state: FSMContext):
+    await state.finish()
+    raz_cat_markup = await creat_markup_raz()
+    await message.answer("Развлечения на территории глемпинг-парка «НАЗВАНИЕ»\n\n⛱ Зона отдыха у воды с насыпным песком;\n🏐 Волейбольные площадки;\n🌳 Лесные прогулки;\n🎣 Удочки для рыбалки;\n\nА еще👇", reply_markup=raz_cat_markup)
+    await GetInfoRaz.raz_name.set()
+
+    
+@dp.message_handler(state=GetInfoRaz.raz_name)
+async def get_raz_name(message: types.Message, state: FSMContext):
+    raz_name = message.text
+    razs = await db.select_all_infomation2()
+
+    if raz_name:
+        for raz in razs:
+            if raz_name == raz['title']:
+                photo = raz['photos']
+                await message.answer_photo(photo, caption=raz['title'], reply_markup=nav_markup)
+                await message.answer(raz['caption'])
+                
 
 @dp.message_handler(text="🍽 Где поесть", state='*')
 async def do_food(message: types.Message, state: FSMContext):
@@ -174,6 +196,29 @@ async def do_contact(message: types.Message, state: FSMContext):
 
     await message.answer("Наши контакты\n\nОтдел бронирования\n📲 +7(905)641-84-20\n📲 +7(920)897-05-55\n📩 glamping40@yandex.ru\n🌐 na-krayu-zemli.ru/\n\nГруппа Вконтакте\nhttps://vk.com/splav_na_bajdarkah\n\n📲  +7(905)641-84-20 (телефон администратора \"На краю земли\")\n\n📍Наш адрес: Россия, Панорамная долина, дом 1, Юдинки.", disable_web_page_preview=True, reply_markup=admin_markup)
 
-@dp.message_handler(content_types=['photo'])
-async def get_file_id(message: types.Message):
-    print(message.photo[-1]['file_id'])
+@dp.message_handler(text="🎉 Акции", state='*')
+async def do_aks(message: types.Message, state: FSMContext):
+    await state.finish()
+
+    markup = await creat_markup_aks()
+    await message.answer("Акции:", reply_markup=markup)
+    await GetInfoAks.aks_name.set()
+
+@dp.message_handler(text="🔙 Назад", state=GetInfoAks.aks_name)
+async def back_3(message: types.Message, state: FSMContext):
+    await state.finish()
+
+    markup = await creat_markup_aks()
+    await message.answer("Акции:", reply_markup=markup)
+    await GetInfoAks.aks_name.set()
+
+
+@dp.message_handler(state=GetInfoAks.aks_name)
+async def do_aks(message: types.Message, state: FSMContext):
+    aks = message.text 
+    if aks:
+        aksiyi = await db.select_all_infomation3()
+        for aksya in aksiyi:
+            if aks == aksya['title']:
+                await message.answer(aksya['caption'], reply_markup=nav_markup)
+                break

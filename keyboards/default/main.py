@@ -23,13 +23,29 @@ getinfo_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 getinfo_markup.add(KeyboardButton("Смотреть фотографии"), bron)
 getinfo_markup.add(back, menu)
 
-homs_cat_markup = ReplyKeyboardMarkup(resize_keyboard=True)
-homs_cat_markup.add(KeyboardButton("🛕А-фрейм с купелью"), KeyboardButton("🏠 Дом на дереве"), KeyboardButton("🛕Высокий A-фрейм"))
-homs_cat_markup.add(menu, bron)
+async def creat_homs_markup():
+    homs_cat_markup = ReplyKeyboardMarkup(resize_keyboard=True)
+    buttons = await db.select_all_infomation()
+    for button in buttons:
+        homs_cat_markup.insert(KeyboardButton(f"{button['title']}"))
+    homs_cat_markup.add(menu, bron)
+    return homs_cat_markup
 
-raz_cat_markup = ReplyKeyboardMarkup(resize_keyboard=True)
-raz_cat_markup.add(KeyboardButton("Байдарки"), KeyboardButton("Квадроциклы"))
-raz_cat_markup.add(menu)
+async def creat_markup_raz():
+    raz_cat_markup = ReplyKeyboardMarkup(resize_keyboard=True)
+    buttons = await db.select_all_infomation2()
+    for button in buttons:
+        raz_cat_markup.insert(KeyboardButton(f"{button['title']}"))
+    raz_cat_markup.add(menu)
+    return raz_cat_markup
+
+async def creat_markup_aks():
+    raz_cat_markup = ReplyKeyboardMarkup(resize_keyboard=True)
+    buttons = await db.select_all_infomation3()
+    for button in buttons:
+        raz_cat_markup.insert(KeyboardButton(f"{button['title']}"))
+    raz_cat_markup.add(menu)
+    return raz_cat_markup
 
 nav_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 nav_markup.add(back, menu)

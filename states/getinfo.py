@@ -4,6 +4,14 @@ class GetInfoHoms(StatesGroup):
     home_name = State()
     home_photos = State()
 
+class GetInfoRaz(StatesGroup):
+    raz_name = State()
+    raz_photo = State()
+
+class GetInfoAks(StatesGroup):
+    aks_name = State()
+    aks_caption = State()
+
 class GetComent(StatesGroup):
     coment = State()
 

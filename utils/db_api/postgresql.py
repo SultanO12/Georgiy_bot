@@ -90,6 +90,60 @@ class Database:
         """
         await self.execute(sql, execute=True)
     
+    async def create_table_infomation2(self):
+        sql = """
+        CREATE TABLE IF NOT EXISTS Infomation2 (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        caption text NOT NULL,
+        photos text NOT NULL
+        );
+        """
+        await self.execute(sql, execute=True)
+    
+    async def create_table_infomation3(self):
+        sql = """
+        CREATE TABLE IF NOT EXISTS Infomation3 (
+        id SERIAL PRIMARY KEY,
+        title text NOT NULL,
+        caption text NOT NULL
+        );
+        """
+        await self.execute(sql, execute=True)
+
+    async def delete_info3(self, title):
+        sql = "DELETE FROM Infomation3 WHERE title=$1"
+        return await self.execute(sql, title, execute=True)
+    
+    async def update_infomation3(self, title, caption):
+        sql = "UPDATE Infomation3 SET caption=$2 WHERE title=$1 returning *"
+        return await self.execute(sql, title, caption, fetchrow=True)
+
+    async def add_infomation3(self, title, caption):
+        sql = "INSERT INTO Infomation3 (title, caption) VALUES($1, $2) returning *"
+        return await self.execute(sql, title, caption, fetchrow=True)
+
+    async def select_all_infomation3(self):
+        sql = "SELECT * FROM Infomation3"
+        return await self.execute(sql, fetch=True)
+
+
+    async def delete_info2(self, title):
+        sql = "DELETE FROM Infomation2 WHERE title=$1"
+        return await self.execute(sql, title, execute=True)
+    
+    async def add_infomation2(self, title, caption, photos):
+        sql = "INSERT INTO Infomation2 (title, caption, photos) VALUES($1, $2, $3) returning *"
+        return await self.execute(sql, title, caption, photos, fetchrow=True)
+
+    async def select_all_infomation2(self):
+        sql = "SELECT * FROM Infomation2"
+        return await self.execute(sql, fetch=True)
+
+    async def delete_info(self, title):
+        sql = "DELETE FROM Infomation WHERE title=$1"
+        return await self.execute(sql, title, execute=True)
+    
     async def add_infomation(self, title, caption, photos):
         sql = "INSERT INTO Infomation (title, caption, photos) VALUES($1, $2, $3) returning *"
         return await self.execute(sql, title, caption, photos, fetchrow=True)

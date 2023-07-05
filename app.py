@@ -13,7 +13,9 @@ async def on_startup(dispatcher):
     await db.create_table_chapters()
     await db.create_table_categories()
     await db.create_table_infomation()
-
+    await db.create_table_infomation2()
+    await db.create_table_infomation3()
+    
     await set_default_commands(dispatcher)
 
     await on_startup_notify(dispatcher)
