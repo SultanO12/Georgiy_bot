@@ -328,8 +328,7 @@ async def do_cat(message: types.Message, state: FSMContext):
 async def get_file_id(message: types.Message):
     await message.answer(message.photo[-1]['file_id'])
 
-@dp.message_handler(content_types=types.ContentType.VIDEO, user_id=ADMINS)
+@dp.message_handler(content_types=['video'], user_id=ADMINS)
 async def process_video(message: types.Message):
-    video = message.video
-    video_file_id = video.file_id
+    video_file_id = message.video.file_id
     await message.reply(video_file_id)

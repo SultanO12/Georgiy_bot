@@ -33,11 +33,16 @@ async def creat_homs_markup():
 
 async def creat_markup_raz():
     raz_cat_markup = ReplyKeyboardMarkup(resize_keyboard=True)
-    buttons = await db.select_all_infomation2()
-    for button in buttons:
-        raz_cat_markup.insert(KeyboardButton(f"{button['title']}"))
-    raz_cat_markup.add(menu)
+    # buttons = await db.select_all_infomation2()
+    # for button in buttons:
+    #     raz_cat_markup.insert(KeyboardButton(f"{button['title']}"))
+    # raz_cat_markup.add(menu)
+
+    raz_cat_markup.add(KeyboardButton("Сплавы на байдарках"), KeyboardButton("КВАДРОЦИКЛЫ"))
+    raz_cat_markup.add(menu, bron)
+    
     return raz_cat_markup
+    
 
 async def creat_markup_aks():
     raz_cat_markup = ReplyKeyboardMarkup(resize_keyboard=True)
@@ -58,3 +63,7 @@ coment_markup.add(KeyboardButton("✍️ Написать отзыв"), menu)
 
 check_date = ReplyKeyboardMarkup(resize_keyboard=True)
 check_date.add(KeyboardButton("Узнать свободные даты"))
+
+photos_markup = ReplyKeyboardMarkup(resize_keyboard=True)
+photos_markup.add(KeyboardButton("Смотреть фотографии"), bron)
+photos_markup.add(back, menu)

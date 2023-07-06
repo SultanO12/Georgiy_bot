@@ -142,35 +142,49 @@ async def do_raz(message: types.Message, state: FSMContext):
     photo2 = 'AgACAgIAAxkBAAIQy2Sm3blIYfpXw1KEK3ECAcWZ7KPnAAI0zTEb7_owSYNpbItOaO9nAQADAgADeAADLwQ'
     photo3 = 'AgACAgIAAxkBAAIQymSm3bkM3z2W_fmgeQmjTxSNTT8NAAIzzTEb7_owSSPRVlPm7dMSAQADAgADeQADLwQ'
 
-    media_group = [
-        types.InputMediaPhoto(media=photo1),
-        types.InputMediaPhoto(media=photo2, caption='У нас есть два варианта развлечений:\n\n1) Прогулка на квадроциклах (работает круглый год, независимо от сезона)\n\n2) Сплав на байдарках (Работает с мая по октябрь, пока позволяет погода)\n\nПро что рассказать подробнее?'),
-        types.InputMediaPhoto(media=photo3)
-    ]
-    await message.reply_media_group(media=media_group, reply_markup=raz_cat_markup)
+    media = types.MediaGroup()
+    media.attach_photo(types.InputFile(photo1))
+    media.attach_photo(types.InputFile(photo2), 'У нас есть два варианта развлечений:\n\n1) Прогулка на квадроциклах (работает круглый год, независимо от сезона)\n\n2) Сплав на байдарках (Работает с мая по октябрь, пока позволяет погода)\n\nПро что рассказать подробнее?')
+    media.attach_photo(types.InputFile(photo3))
+    await bot.send_media_group(message.chat.id, media=media, reply_markup=raz_cat_markup)
     await GetInfoRaz.raz_name.set()
 
 @dp.message_handler(text="🔙 Назад", state=GetInfoRaz.raz_name)
 async def back_5(message: types.Message, state: FSMContext):
     await state.finish()
     raz_cat_markup = await creat_markup_raz()
-    await message.answer("У нас есть два варианта развлечений:\n\n1) Прогулка на квадроциклах (работает круглый год, независимо от сезона)\n\n2) Сплав на байдарках (Работает с мая по октябрь, пока позволяет погода)\n\nПро что рассказать подробнее?", reply_markup=raz_cat_markup)
+
+    photo1 = 'AgACAgIAAxkBAAIQyWSm3bkvKyCMTbH50vNsgjXbVJ8HAAIyzTEb7_owSRzTiVnKAAFlWQEAAwIAA3kAAy8E'
+    photo2 = 'AgACAgIAAxkBAAIQy2Sm3blIYfpXw1KEK3ECAcWZ7KPnAAI0zTEb7_owSYNpbItOaO9nAQADAgADeAADLwQ'
+    photo3 = 'AgACAgIAAxkBAAIQymSm3bkM3z2W_fmgeQmjTxSNTT8NAAIzzTEb7_owSSPRVlPm7dMSAQADAgADeQADLwQ'
+
+    media = types.MediaGroup()
+    media.attach_photo(types.InputFile(photo1))
+    media.attach_photo(types.InputFile(photo2), 'У нас есть два варианта развлечений:\n\n1) Прогулка на квадроциклах (работает круглый год, независимо от сезона)\n\n2) Сплав на байдарках (Работает с мая по октябрь, пока позволяет погода)\n\nПро что рассказать подробнее?')
+    media.attach_photo(types.InputFile(photo3))
+    await bot.send_media_group(message.chat.id, media=media, reply_markup=raz_cat_markup)
     await GetInfoRaz.raz_name.set()
+
 
     
 @dp.message_handler(state=GetInfoRaz.raz_name)
 async def get_raz_name(message: types.Message, state: FSMContext):
     raz_name = message.text
-    razs = await db.select_all_infomation2()
 
     if raz_name:
-        for raz in razs:
-            if raz_name == raz['title']:
-                photo = raz['photos']
-                await message.answer_photo(photo, caption=raz['title'], reply_markup=nav_markup)
-                await message.answer(raz['caption'])
-                
+        if raz_name == "КВАДРОЦИКЛЫ":
+            photo = 'AgACAgIAAxkBAAIRQGSm7mZgsmc86kNv5QgDoSpMCL05AAK8zTEbLZAxSRRlnV6mSceuAQADAgADeQADLwQ'
+            await message.answer_photo(photo, caption="Стоимость погулки: 8,500 руб - 2-х часовая программа для двоих человек на 2-х местном квадрике\n\n🔥В стоимость входит:\n\n✅ Инструктаж и пробный заезд\n✅ Сопровождение инструктора и помощь на всем пути\n✅ Авторский драйвовый подготовленный лесной маршрут\n✅ Фото-видео во время мероприятия на iphone 13 pro\n✅ Шлем\n✅ ГСМ\n\nЕсть 3 варианта сложности прохождения маршрута: легкий / средний  и ЭКСТРИМ. На предварительном прокате решаем вместе, по какому поедем. Всегда сложность можно изменить.\n\nПри этом можно много чего совместить:\n- покататься 2 часа на свежем воздухе\n- насладиться красотой природы\n- промчаться с ветерком\n- получить большое количество положительных эмоций\n- Пересечь водоём 😃\n- и ещё огромный заряд энергии и адреналин 🔥", reply_markup=photos_markup)
+            await GetInfoRaz.raz_photo_cvad.set()
 
+@dp.message_handler(text="Смотреть фотографии", state=GetInfoRaz.raz_photo_cvad)
+async def send_photos_cvad(message: types.Message, state: FSMContext):
+    photos = ['AgACAgIAAxkBAAIRVmSm-JYP0XAHwpxDHM-xufHU7IPJAAIezjEbLZAxSUS6NGsl2QsIAQADAgADeAADLwQ', 'AgACAgIAAxkBAAIRV2Sm-JY2biqmlklxlUTusbK6-2vQAAIfzjEbLZAxSQ1Kf_PbVZekAQADAgADeQADLwQ', 'AgACAgIAAxkBAAIRWGSm-JYWZ_FynivvgwKnpgaUR8c4AAK8zTEbLZAxSRRlnV6mSceuAQADAgADeQADLwQ', 'AgACAgIAAxkBAAIRWWSm-JbtDiKC_HjoPjDr0S08Zy0yAAIgzjEbLZAxSfNBkUKJmO0GAQADAgADeQADLwQ']
+    videos = ['', '']
+    for photo in photos:
+        await message.answer_photo(photo, reply_markup=nav_markup)
+    for video in videos:
+        pass
 @dp.message_handler(text="🍽 Где поесть", state='*')
 async def do_food(message: types.Message, state: FSMContext):
     await state.finish()
@@ -208,7 +222,7 @@ async def get_coment(message: types.Message, state: FSMContext):
 async def do_contact(message: types.Message, state: FSMContext):
     await state.finish()
 
-    await message.answer("Наши контакты\n\nОтдел бронирования\n📲 +7(905)641-84-20\n📲 +7(920)897-05-55\n📩 glamping40@yandex.ru\n🌐 na-krayu-zemli.ru/\n\nГруппа Вконтакте\nhttps://vk.com/splav_na_bajdarkah\n\n📲  +7(905)641-84-20 (телефон администратора \"На краю земли\")\n\n📍Наш адрес: Россия, Панорамная долина, дом 1, Юдинки.", disable_web_page_preview=True, reply_markup=admin_markup)
+    await message.answer("Наши контакты\n\nОтдел бронирования\n📲 +7(920)897-05-55\n📲 +7(905)641-84-20\n🌐 Сайт:  na-krayu-zemli.ru/\n\nГруппа Вконтакте\nhttps://vk.com/splav_na_bajdarkah\n\n📲  +7(905)641-84-20 (телефон администратора \"На краю земли\")\n\n📍Наш адрес: Россия, Калужская область, Козельский район,  ул. Панорамная долина, дом 1, Юдинки.", disable_web_page_preview=True, reply_markup=admin_markup)
 
 @dp.message_handler(text="🎉 Акции", state='*')
 async def do_aks(message: types.Message, state: FSMContext):
