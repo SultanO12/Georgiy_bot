@@ -9,6 +9,7 @@ class CreatCatHome(StatesGroup):
     title = State()
     capton = State()
     photos = State()
+    video = State()
 
 class CreatCatRaz(StatesGroup):
     title = State()

@@ -1,6 +1,7 @@
 import asyncio
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from data.config import ADMINS
 from loader import dp, db, bot
 import pandas as pd
@@ -116,12 +117,27 @@ async def get_caption(message: types.Message, state: FSMContext):
 @dp.message_handler(state=CreatCatHome.photos, user_id=ADMINS)
 async def get_caption(message: types.Message, state: FSMContext):
     if message.text:
+        await state.update_data({"photos":message.text})
+        markup = ReplyKeyboardMarkup(resize_keyboard=True)
+        markup.add(KeyboardButton("Без видео"))
+        await message.answer("Введите Видео ID через пробел:")
+        await CreatCatHome.video.set()
+
+    
+
+@dp.message_handler(state=CreatCatHome.photos, user_id=ADMINS)
+async def get_caption(message: types.Message, state: FSMContext):
+    if message.text:
         photos = message.text
         data = await state.get_data()
         title = data['title']
         caption = data['caption']
+        if message.text == "Без видео":
+            video = None
+        else:
+            video = message.text
 
-        await db.add_infomation(title, caption, photos)
+        await db.add_infomation(title, caption, photos, video)
         await state.finish()
         await message.answer("Информация успешно записана", reply_markup=main_admin_markup)
 
@@ -302,12 +318,18 @@ async def get_msg(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer("Рассылка успешно отправлена! ✅", reply_markup=main_admin_markup)
 
-@dp.message_handler(text="🆔 Получить Photo ID", user_id=ADMINS)
+@dp.message_handler(text="🆔 Получить Photo/Video ID", user_id=ADMINS)
 async def do_cat(message: types.Message, state: FSMContext):
     await state.finish()
 
-    await message.answer("Отправьте фотографии:")
+    await message.answer("Отправьте фото или видео:")
 
 @dp.message_handler(content_types=['photo'], user_id=ADMINS)
 async def get_file_id(message: types.Message):
     await message.answer(message.photo[-1]['file_id'])
+
+@dp.message_handler(content_types=types.ContentType.VIDEO, user_id=ADMINS)
+async def process_video(message: types.Message):
+    video = message.video
+    video_file_id = video.file_id
+    await message.reply(video_file_id)

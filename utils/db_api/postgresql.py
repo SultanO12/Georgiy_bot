@@ -85,7 +85,8 @@ class Database:
         id SERIAL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         caption text NOT NULL,
-        photos text NOT NULL
+        photos text NOT NULL,
+        video text NULL
         );
         """
         await self.execute(sql, execute=True)
@@ -132,9 +133,9 @@ class Database:
         sql = "DELETE FROM Infomation2 WHERE title=$1"
         return await self.execute(sql, title, execute=True)
     
-    async def add_infomation2(self, title, caption, photos):
-        sql = "INSERT INTO Infomation2 (title, caption, photos) VALUES($1, $2, $3) returning *"
-        return await self.execute(sql, title, caption, photos, fetchrow=True)
+    async def add_infomation2(self, title, caption, photos, video=None):
+        sql = "INSERT INTO Infomation2 (title, caption, photos, video) VALUES($1, $2, $3, $4) returning *"
+        return await self.execute(sql, title, caption, photos, video, fetchrow=True)
 
     async def select_all_infomation2(self):
         sql = "SELECT * FROM Infomation2"
@@ -144,9 +145,9 @@ class Database:
         sql = "DELETE FROM Infomation WHERE title=$1"
         return await self.execute(sql, title, execute=True)
     
-    async def add_infomation(self, title, caption, photos):
-        sql = "INSERT INTO Infomation (title, caption, photos) VALUES($1, $2, $3) returning *"
-        return await self.execute(sql, title, caption, photos, fetchrow=True)
+    async def add_infomation(self, title, caption, photos, video=None):
+        sql = "INSERT INTO Infomation (title, caption, photos, video) VALUES($1, $2, $3, $4) returning *"
+        return await self.execute(sql, title, caption, photos, video, fetchrow=True)
 
     async def select_all_infomation(self):
         sql = "SELECT * FROM Infomation"
