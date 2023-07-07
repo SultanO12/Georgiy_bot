@@ -75,4 +75,6 @@ splavs_markup.add(back, menu)
 
 nav_spav_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 nav_spav_markup.add("Смотреть фотографии", bron)
+backk = KeyboardButton("🔙  Назад")
+
 nav_spav_markup.add(back, menu)
