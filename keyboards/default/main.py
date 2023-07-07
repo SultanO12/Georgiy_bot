@@ -83,3 +83,12 @@ nav_spav_markup.add(backk, menu)
 
 nav_cvad_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 nav_cvad_markup.add(backk, menu)
+
+location_markup = ReplyKeyboardMarkup(resize_keyboard=True)
+location_markup.add(KeyboardButton("📲 Контакты"))
+location_markup.add(menu, bron)
+
+
+contact_info_markup = ReplyKeyboardMarkup(resize_keyboard=True)
+contact_info_markup.add(KeyboardButton("🚗 Как добраться"))
+contact_info_markup.add(menu, bron)

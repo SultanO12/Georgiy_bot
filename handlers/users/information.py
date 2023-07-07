@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from loader import dp, db, bot
 from keyboards.default.main import *
-from keyboards.inline.contect_info import admin_markup
+from keyboards.inline.contect_info import admin_markup, contact_markup
 from keyboards.inline.check_info import check_markup
 from states.getinfo import *
 
@@ -266,14 +266,18 @@ async def send_photos_cvad(message: types.Message, state: FSMContext):
 async def do_food(message: types.Message, state: FSMContext):
     await state.finish()
 
-    await message.answer_photo("AgACAgIAAxkBAAIDCmSggB-Ot7Mk3664bMuxoL0g8wtFAAKu0DEbG8cBSZu0EzNj9qk3AQADAgADeQADLwQ", caption="В каждом шале есть мини кухня. Холодильник, электро плита, чайник, вся необходимая посуда, крупы, чай, кофе. Перед шале мангал, решетка. Можно привезти уголь, розжиг и готовить шашлык. Или по дороге купить готовую еду.\n\nТак же вы можете заказать готовую еду у нас (меню уточняйте у менеджера) 😊", reply_markup=food_cat_markup)
-
+    await message.answer_photo("AgACAgIAAxkBAAIDCmSggB-Ot7Mk3664bMuxoL0g8wtFAAKu0DEbG8cBSZu0EzNj9qk3AQADAgADeQADLwQ", caption="В каждом шале есть мини кухня. Холодильник, электро плита, чайник, вся необходимая посуда, крупы, чай, кофе. Перед шале мангал, решетка. Можно привезти уголь, розжиг и готовить шашлык. Или по дороге купить готовую еду.\n\nТак же вы можете заказать готовую еду у нас (меню уточняйте у менеджера) 😊", reply_markup=contact_markup)
+    await message.answer("💬⁣", reply_markup=food_cat_markup)
 @dp.message_handler(text="🙏 Отзывы", state='*')
 async def do_coment(message: types.Message, state: FSMContext):
     await state.finish()
     
-    await message.answer("Если вы оставите нам отзыв, мы будем вам очень признательны, только благодаря вам, мы сможем стать лучше 💪", reply_markup=coment_markup)
-
+    photo = 'AgACAgIAAxkBAAIXT2SoSJmaJsvZJB3McEAe8shfHsWXAALmxzEbqDNISVcCKlujbvOCAQADAgADeAADLwQ'
+    await message.answer_photo(photo, caption="(Более 1000 отзывов по хэштгу #splav40 в запрещеной соц. сети!)\n\nРейтинг 10.0 на букинге.\nРейтинг 5.0 на Яндексе, более 200+ отзывов.  (Найти можно по фразе \"На краю земли калуга\")\n\nОбратите внимание на 100% показатель чистоты/ уборки и обслуживания/вежливости персонала.\n\nИ это только начало... Ключевая изюминка кроется в самой атмосфере и месте, где расположен Глэмпинг. Атмосфера тут непередаваемая словами.\n\nP.S. Смотрите видео со звуком 👇", reply_markup=coment_markup)
+    
+    video = 'BAACAgIAAxkBAAIXUWSoST8u-cNObOYBokAIkzsEjCuWAAIyMwACwbk4STPpHbZlOJUbLwQ'
+    await message.answer_video(video)
+    
 @dp.message_handler(text="✍️ Написать отзыв", state='*')
 async def do_coment(message: types.Message, state: FSMContext):
     await state.finish()
@@ -300,7 +304,8 @@ async def do_contact(message: types.Message, state: FSMContext):
     await state.finish()
 
     await message.answer("Наши контакты\n\nОтдел бронирования\n📲 +7(920)897-05-55\n📲 +7(905)641-84-20\n🌐 Сайт:  na-krayu-zemli.ru/\n\nГруппа Вконтакте\nhttps://vk.com/splav_na_bajdarkah\n\n📲  +7(905)641-84-20 (телефон администратора \"На краю земли\")\n\n📍Наш адрес: Россия, Калужская область, Козельский район,  ул. Панорамная долина, дом 1, Юдинки.", disable_web_page_preview=True, reply_markup=admin_markup)
-
+    await message.answer("💬⁣", reply_markup=contact_info_markup)
+    
 @dp.message_handler(text="🎉 Акции", state='*')
 async def do_aks(message: types.Message, state: FSMContext):
     await state.finish()
@@ -327,3 +332,10 @@ async def do_aks(message: types.Message, state: FSMContext):
             if aks == aksya['title']:
                 await message.answer(aksya['caption'], reply_markup=nav_markup)
                 break
+
+@dp.message_handler(text="🚗 Как добраться", state='*')
+async def do_aks(message: types.Message, state: FSMContext):
+    await state.finish()
+    
+    await message.answer("1) Если вы на личном Авто:\n\nАдрес Калужская область; Козельский район; деревня Юдинки ул Панорамная долина дом 1\nПо точке когда поедете, смотрите, чтобы и адрес прибытия правильный стоял\n\nПримерно минут за 7 до прибытия к нам должны увидеть мост через реку Серёна. После него именно второй поворот налево (первый в деревню, туда не надо) Немного проедете будет синяя остановка. За ней направо. 500 метров и Вы у нас.\n\nНаши координаты 54.159163, 35.751843 \n\n2) Если вы без Авто, тогда на поезде можно за 2 часа доехать до Калуги, а оттуда на Такси или общественном транспорте добраться до нас по инструкции выше.", reply_markup=location_markup)
+    await message.answer_location(54.159163, 35.751843)
