@@ -134,7 +134,7 @@ class Database:
         return await self.execute(sql, title, execute=True)
     
     async def add_infomation2(self, title, caption, photos, video=None):
-        sql = "INSERT INTO Infomation2 (title, caption, photos, video) VALUES($1, $2, $3, $4) returning *"
+        sql = "INSERT INTO Infomation2 (title, caption, photos) VALUES($1, $2, $3, $4) returning *"
         return await self.execute(sql, title, caption, photos, video, fetchrow=True)
 
     async def select_all_infomation2(self):
