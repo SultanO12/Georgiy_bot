@@ -7,6 +7,8 @@ class GetInfoHoms(StatesGroup):
 class GetInfoRaz(StatesGroup):
     raz_name = State()
     raz_photo_cvad = State()
+    raz_cat_splav = State()
+    raz_photo_splav = State()
 
 class GetInfoAks(StatesGroup):
     aks_name = State()

@@ -67,3 +67,12 @@ check_date.add(KeyboardButton("Узнать свободные даты"))
 photos_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 photos_markup.add(KeyboardButton("Смотреть фотографии"), bron)
 photos_markup.add(back, menu)
+
+splavs_markup = ReplyKeyboardMarkup(resize_keyboard=True)
+splavs_markup.add(KeyboardButton("Однодневный сплав"), KeyboardButton("Двухдневные сплавы"))
+splavs_markup.add(bron)
+splavs_markup.add(back, menu)
+
+nav_spav_markup = ReplyKeyboardMarkup(resize_keyboard=True)
+nav_spav_markup.add("Смотреть фотографии", bron)
+nav_spav_markup.add(back, menu)
