@@ -159,10 +159,11 @@ async def back_5(message: types.Message, state: FSMContext):
     photo3 = 'https://i.ibb.co/0X1JgZR/image.png'
 
     media = types.MediaGroup()
-    media.attach_photo(photo='AgACAgIAAxkBAAIRoGSoDSQmN_y4Xmhhd0iWA3UyTniIAAIyzTEb7_owSRzTiVnKAAFlWQEAAwIAA3kAAy8E')
+    media.attach_photo(photo=photo1)
     media.attach_photo(photo=photo2, caption='У нас есть два варианта развлечений:\n\n1) Прогулка на квадроциклах (работает круглый год, независимо от сезона)\n\n2) Сплав на байдарках (Работает с мая по октябрь, пока позволяет погода)\n\nПро что рассказать подробнее?')
     media.attach_photo(photo=photo3)
-    await bot.send_media_group(message.chat.id, media=media, reply_markup=raz_cat_markup)
+    await message.answer_media_group(media)
+    await message.answer("💬⁣", reply_markup=raz_cat_markup)
     await GetInfoRaz.raz_name.set()
 
 
