@@ -64,9 +64,11 @@ coment_markup.add(KeyboardButton("✍️ Написать отзыв"), menu)
 check_date = ReplyKeyboardMarkup(resize_keyboard=True)
 check_date.add(KeyboardButton("Узнать свободные даты"))
 
+backk = KeyboardButton("🔙  Назад")
+
 photos_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 photos_markup.add(KeyboardButton("Смотреть фотографии"), bron)
-photos_markup.add(back, menu)
+photos_markup.add(backk, menu)
 
 splavs_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 splavs_markup.add(KeyboardButton("Однодневный сплав"), KeyboardButton("Двухдневные сплавы"))
@@ -75,6 +77,6 @@ splavs_markup.add(back, menu)
 
 nav_spav_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 nav_spav_markup.add("Смотреть фотографии", bron)
-backk = KeyboardButton("🔙  Назад")
 
-nav_spav_markup.add(back, menu)
+
+nav_spav_markup.add(backk, menu)
