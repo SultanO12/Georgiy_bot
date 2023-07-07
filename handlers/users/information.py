@@ -184,7 +184,7 @@ async def send_photos_cvad(message: types.Message, state: FSMContext):
     for photo in photos:
         await message.answer_photo(photo, reply_markup=nav_markup)
     for video in videos:
-        await message.answer_photo(video, reply_markup=nav_markup)
+        await message.answer_video(video, reply_markup=nav_markup)
         
 @dp.message_handler(text="🍽 Где поесть", state='*')
 async def do_food(message: types.Message, state: FSMContext):
