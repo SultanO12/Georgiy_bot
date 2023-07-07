@@ -150,7 +150,7 @@ async def do_raz(message: types.Message, state: FSMContext):
     await message.answer("💬⁣", reply_markup=raz_cat_markup)
     await GetInfoRaz.raz_name.set()
 
-@dp.message_handler(text="🔙 Назад", state=GetInfoRaz.raz_cat_splav)
+@dp.message_handler(text="🔙 Назад", state={GetInfoRaz.raz_cat_splav, GetInfoRaz.raz_name})
 async def back_5(message: types.Message, state: FSMContext):
     await state.finish()
     raz_cat_markup = await creat_markup_raz()
