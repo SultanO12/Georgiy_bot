@@ -68,7 +68,7 @@ backk = KeyboardButton("🔙  Назад")
 
 photos_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 photos_markup.add(KeyboardButton("Смотреть фотографии"), bron)
-photos_markup.add(backk, menu)
+photos_markup.add(back, menu)
 
 splavs_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 splavs_markup.add(KeyboardButton("Однодневный сплав"), KeyboardButton("Двухдневные сплавы"))
@@ -80,3 +80,6 @@ nav_spav_markup.add("Смотреть фотографии", bron)
 
 
 nav_spav_markup.add(backk, menu)
+
+nav_cvad_markup = ReplyKeyboardMarkup(resize_keyboard=True)
+nav_cvad_markup.add(backk, menu)
