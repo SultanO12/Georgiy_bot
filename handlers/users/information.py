@@ -138,9 +138,9 @@ async def do_raz(message: types.Message, state: FSMContext):
     await state.finish()
     raz_cat_markup = await creat_markup_raz()
 
-    photo1 = 'AgACAgIAAxkBAAIQyWSm3bkvKyCMTbH50vNsgjXbVJ8HAAIyzTEb7_owSRzTiVnKAAFlWQEAAwIAA3kAAy8E'
-    photo2 = 'AgACAgIAAxkBAAIQy2Sm3blIYfpXw1KEK3ECAcWZ7KPnAAI0zTEb7_owSYNpbItOaO9nAQADAgADeAADLwQ'
-    photo3 = 'AgACAgIAAxkBAAIQymSm3bkM3z2W_fmgeQmjTxSNTT8NAAIzzTEb7_owSSPRVlPm7dMSAQADAgADeQADLwQ'
+    photo1 = 'https://i.ibb.co/xsYV6qv/image.png'
+    photo2 = 'https://i.ibb.co/LdWN262/image.png'
+    photo3 = 'https://i.ibb.co/0X1JgZR/image.png'
 
     media = types.MediaGroup()
     media.attach_photo(types.InputFile(photo1))
@@ -154,9 +154,9 @@ async def back_5(message: types.Message, state: FSMContext):
     await state.finish()
     raz_cat_markup = await creat_markup_raz()
 
-    photo1 = 'AgACAgIAAxkBAAIQyWSm3bkvKyCMTbH50vNsgjXbVJ8HAAIyzTEb7_owSRzTiVnKAAFlWQEAAwIAA3kAAy8E'
-    photo2 = 'AgACAgIAAxkBAAIQy2Sm3blIYfpXw1KEK3ECAcWZ7KPnAAI0zTEb7_owSYNpbItOaO9nAQADAgADeAADLwQ'
-    photo3 = 'AgACAgIAAxkBAAIQymSm3bkM3z2W_fmgeQmjTxSNTT8NAAIzzTEb7_owSSPRVlPm7dMSAQADAgADeQADLwQ'
+    photo1 = 'https://i.ibb.co/xsYV6qv/image.png'
+    photo2 = 'https://i.ibb.co/LdWN262/image.png'
+    photo3 = 'https://i.ibb.co/0X1JgZR/image.png'
 
     media = types.MediaGroup()
     media.attach_photo(types.InputFile(photo1))
@@ -180,11 +180,12 @@ async def get_raz_name(message: types.Message, state: FSMContext):
 @dp.message_handler(text="Смотреть фотографии", state=GetInfoRaz.raz_photo_cvad)
 async def send_photos_cvad(message: types.Message, state: FSMContext):
     photos = ['AgACAgIAAxkBAAIRVmSm-JYP0XAHwpxDHM-xufHU7IPJAAIezjEbLZAxSUS6NGsl2QsIAQADAgADeAADLwQ', 'AgACAgIAAxkBAAIRV2Sm-JY2biqmlklxlUTusbK6-2vQAAIfzjEbLZAxSQ1Kf_PbVZekAQADAgADeQADLwQ', 'AgACAgIAAxkBAAIRWGSm-JYWZ_FynivvgwKnpgaUR8c4AAK8zTEbLZAxSRRlnV6mSceuAQADAgADeQADLwQ', 'AgACAgIAAxkBAAIRWWSm-JbtDiKC_HjoPjDr0S08Zy0yAAIgzjEbLZAxSfNBkUKJmO0GAQADAgADeQADLwQ']
-    videos = ['', '']
+    videos = ['BAACAgIAAxkBAAIRamSm-47ISfXaW33J9I7-cOcbGtZOAAKuKwACD2vBSNWlieHMb0ZTLwQ', 'BAACAgIAAxkBAAIRaGSm-4G440mcdHkyZMsvHKNhgVj9AAIDNAACLZAxSblJwsAH6n0WLwQ']
     for photo in photos:
         await message.answer_photo(photo, reply_markup=nav_markup)
     for video in videos:
-        pass
+        await message.answer_photo(video, reply_markup=nav_markup)
+        
 @dp.message_handler(text="🍽 Где поесть", state='*')
 async def do_food(message: types.Message, state: FSMContext):
     await state.finish()
