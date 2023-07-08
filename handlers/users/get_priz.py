@@ -6,16 +6,17 @@ from keyboards.default.main import *
 
 @dp.message_handler(text="🎁 Получить подарок", state='*')
 async def get_reg_info(message: types.Message, state: FSMContext):
-    await state.finish()
+    # await state.finish()
 
-    user = await db.select_user(telegram_id=message.from_user.id)
-    reg_user = await db.select_register_info(user_id=int(user['id']))
+    # user = await db.select_user(telegram_id=message.from_user.id)
+    # reg_user = await db.select_register_info(user_id=int(user['id']))
 
-    if reg_user is None:
-      await message.answer("🖐 Как тебя зовут?")
-      await message.answer("⬇️")
+    # if reg_user is None:
+      # await message.answer("🖐 Как тебя зовут?", reply_markup=ReplyKeyboardRemove())
+    #   await message.answer("⬇️")
 
-      await GetRegInfo.first_name.set()
+    #   await GetRegInfo.first_name.set()
+    pass
 
 @dp.message_handler(state=GetRegInfo.first_name)
 async def get_name(message: types.Message, state: FSMContext):
@@ -46,6 +47,20 @@ async def get_last_name(message: types.Message, state: FSMContext):
 async def get_phone(message: types.Message, state: FSMContext):
     if message.text:
         phone = message.text
+        data = await state.get_data()
+        name = data['name']
+        last_name = data['last_name']
+
+        user_id = await db.select_user(telegram_id=int(message.from_user.id))
+        await db.add_register_info(user_id['id'], name, last_name, phone)
+
+        await message.answer("😍 Отлично!\n\n💖 Теперь мы стали ближе", reply_markup=main_markup)
+        await message.answer(f"{name}, на ваш бонусный счет зачислено 1000 ₽. \n\nТы можешь ими воспользоваться у нас глэмпинг-парке, при бронировании домиков или дополнительных услуг")
+        
+        await state.finish()
+    elif message.contact:
+        contact = message.contact
+        phone = contact.phone_number
         data = await state.get_data()
         name = data['name']
         last_name = data['last_name']
