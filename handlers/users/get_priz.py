@@ -50,7 +50,7 @@ async def get_phone(message: types.Message, state: FSMContext):
         name = data['name']
         last_name = data['last_name']
 
-        user_id = db.select_all_users(telegram_id=int(message.from_user.id))
+        user_id = await db.select_user(telegram_id=int(message.from_user.id))
         await db.add_register_info(user_id['id'], name, last_name, phone)
 
         await message.answer("😍 Отлично!\n\n💖 Теперь мы стали ближе", reply_markup=main_markup)

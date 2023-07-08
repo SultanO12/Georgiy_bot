@@ -22,11 +22,13 @@ async def do_admin_panel(message: types.Message, state: FSMContext):
         sheet['C1'] = 'Фамилия'
         sheet['D1'] = 'Телефон'
         for i, row in enumerate(data, start=2):
-            sheet['A{}'.format(i)] = row[0]
-            sheet['B{}'.format(i)] = row[1]
-            sheet['С{}'.format(i)] = row[2]
-            sheet['D{}'.format(i)] = row[3]
+            if len(row) >= 4:
+                sheet['A{}'.format(i)] = row[0]
+                sheet['B{}'.format(i)] = row[1]
+                sheet['С{}'.format(i)] = row[2]
+                sheet['D{}'.format(i)] = row[3]
         wb.save('table.xlsx')
+
 
     users = await db.select_all_register_info()
 
