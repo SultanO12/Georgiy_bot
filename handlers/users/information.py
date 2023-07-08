@@ -131,6 +131,17 @@ async def do_home_potos(message: types.Message, state: FSMContext):
                 videos = home['video'].split()
                 for video in videos:
                     await message.answer_video(video, reply_markup=nav_markup)
+            if home_name == '🏠 Дом на дереве':
+                video = 'BAACAgIAAxkBAAIZdGSpNfm4wqW8G4X3nzUf-39su0XmAAKxMgACwbk4SUxNoWO8eMN_LwQ'
+                await message.answer_video(video)
+            elif home_name == '🛕А-фрейм с купелью':
+                video1 = 'BAACAgIAAxkBAAIZvmSpPQj1caOOZuOg1SPMD4FkxnFDAAKeMAACqDNISeLcA0MwCRLDLwQ'
+                video2 = 'BAACAgIAAxkBAAIZwmSpQQYiRdaqztsq0E1OeloAARE4PAACuDAAAqgzSEldttuCFzlOwC8E'
+                await message.answer_video(video1)
+                await message.answer_video(video2)
+            elif home_name == '🛕Высокий A-фрейм':
+                video = 'BAACAgIAAxkBAAIZwGSpPoIhPTAbeASTWpYGEEUyuDVrAAKoMAACqDNISWcnGrO09s_cLwQ'
+                await message.answer_video(video)
 
 
 @dp.message_handler(text="🥳 Развлечение", state='*')

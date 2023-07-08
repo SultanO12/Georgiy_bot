@@ -72,7 +72,6 @@ photos_markup.add(back, menu)
 
 splavs_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 splavs_markup.add(KeyboardButton("Однодневный сплав"), KeyboardButton("Двухдневные сплавы"))
-splavs_markup.add(bron)
 splavs_markup.add(back, menu)
 
 nav_spav_markup = ReplyKeyboardMarkup(resize_keyboard=True)

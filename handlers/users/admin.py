@@ -137,7 +137,7 @@ async def get_caption(message: types.Message, state: FSMContext):
         else:
             video = message.text
 
-        await db.add_infomation(title, caption, photos, video)
+        # await db.add_infomation(title, caption, photos, video)
         await state.finish()
         await message.answer("Информация успешно записана", reply_markup=main_admin_markup)
 
