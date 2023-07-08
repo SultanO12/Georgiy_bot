@@ -7,7 +7,7 @@ from keyboards.default.main import *
 @dp.message_handler(text="🎁 Получить подарок", state='*')
 async def get_reg_info(message: types.Message, state: FSMContext):
     await state.finish()
-    
+
     user = await db.select_user(telegram_id=message.from_user.id)
     reg_user = await db.select_register_info(user_id=int(user['id']))
 
@@ -33,7 +33,7 @@ async def get_name(message: types.Message, state: FSMContext):
 async def get_last_name(message: types.Message, state: FSMContext):
     if message.text:
         last_name = message.text
-        data = state.get_data()
+        data = await state.get_data()
         name = data['name']
 
         await state.update_data({"last_name":last_name})
@@ -46,7 +46,7 @@ async def get_last_name(message: types.Message, state: FSMContext):
 async def get_phone(message: types.Message, state: FSMContext):
     if message.text:
         phone = message.text
-        data = state.get_data()
+        data = await state.get_data()
         name = data['name']
         last_name = data['last_name']
 
