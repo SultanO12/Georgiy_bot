@@ -127,10 +127,10 @@ async def do_home_potos(message: types.Message, state: FSMContext):
             photos = home['photos'].split()[1:]
             for photo in photos:
                 await message.answer_photo(photo, reply_markup=nav_markup)
-            if home['video']:
-                videos = home['video'].split()
-                for video in videos:
-                    await message.answer_video(video, reply_markup=nav_markup)
+            # if home['video']:
+            #     videos = home['video'].split()
+            #     for video in videos:
+            #         await message.answer_video(video, reply_markup=nav_markup)
             if home_name == '🏠 Дом на дереве':
                 video = 'BAACAgIAAxkBAAIZdGSpNfm4wqW8G4X3nzUf-39su0XmAAKxMgACwbk4SUxNoWO8eMN_LwQ'
                 await message.answer_video(video)
