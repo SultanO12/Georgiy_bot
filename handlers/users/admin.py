@@ -10,6 +10,30 @@ from keyboards.default.chapter import *
 from keyboards.inline.admin_inline import * 
 from states.send_msg import *
 from states.admin_state import *
+import openpyxl
+
+@dp.message_handler(text="/exel", user_id=ADMINS, state='*')
+async def do_admin_panel(message: types.Message, state: FSMContext):
+    def createTable(data):
+        wb = openpyxl.Workbook()
+        sheet = wb.active
+        sheet['A1'] = 'Имя'
+        sheet['B1'] = 'Телефон'
+        for i, row in enumerate(data, start=2):
+            sheet['A{}'.format(i)] = row[0]
+            sheet['B{}'.format(i)] = row[1]
+        wb.save('table.xlsx')
+
+    users = await db.select_all_users()
+
+    users_list = []
+
+    for i in users:
+        users_list.append([str(i[-1]), str(i[1])])
+    createTable(users_list)
+
+    with open('table.xlsx', 'rb') as file:
+        await message.answer_document(file)
 
 @dp.message_handler(text="/cleandb", user_id=ADMINS)
 async def get_all_users(message: types.Message):
