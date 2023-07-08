@@ -76,6 +76,7 @@ async def cheking(call: types.CallbackQuery, state: FSMContext):
     date = data['date']
     count_perosons = data['count_perosons']
 
+
     if call.data == 'yes':
         chat_id = '-900586245'
 
