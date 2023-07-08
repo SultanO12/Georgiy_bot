@@ -17,19 +17,23 @@ async def do_admin_panel(message: types.Message, state: FSMContext):
     def createTable(data):
         wb = openpyxl.Workbook()
         sheet = wb.active
-        sheet['A1'] = 'Имя'
-        sheet['B1'] = 'Телефон'
+        sheet['A1'] = 'ID'
+        sheet['B1'] = 'Имя'
+        sheet['C1'] = 'Фамилия'
+        sheet['D1'] = 'Телефон'
         for i, row in enumerate(data, start=2):
             sheet['A{}'.format(i)] = row[0]
             sheet['B{}'.format(i)] = row[1]
+            sheet['С{}'.format(i)] = row[2]
+            sheet['D{}'.format(i)] = row[3]
         wb.save('table.xlsx')
 
-    users = await db.select_all_users()
+    users = await db.select_all_register_info()
 
     users_list = []
 
     for i in users:
-        users_list.append([str(i[-1]), str(i[1])])
+        users_list.append([str(i['user_id']), str(i['name']), str(i['last_name']), str(i['phone'])])
     createTable(users_list)
 
     with open('table.xlsx', 'rb') as file:

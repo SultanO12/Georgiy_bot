@@ -10,6 +10,12 @@ main_markup.add(KeyboardButton("🏡 Домики"), KeyboardButton("🥳 Раз
 main_markup.row("🎉 Акции", "🙏 Отзывы", "🚗 Как добраться")
 main_markup.row("📲 Контакты", "🛎 Забронировать")
 
+register_markup = ReplyKeyboardMarkup(resize_keyboard=True)
+register_markup.add(KeyboardButton("🎁 Получить подарок"), menu)
+
+send_number_markup = ReplyKeyboardMarkup(resize_keyboard=True)
+send_number_markup.add(KeyboardButton("📞 Отправить номер", request_contact=True))
+
 async def cat_markup(capter_id):
     cats = await db.select_all_categories()
     markup = ReplyKeyboardMarkup(resize_keyboard=True)

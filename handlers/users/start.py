@@ -4,7 +4,7 @@ from aiogram.dispatcher import FSMContext
 from loader import dp, db, bot
 from data.config import ADMINS
 from utils.extra_datas import make_title
-from keyboards.default.main import main_markup
+from keyboards.default.main import main_markup, register_markup
 
 
 @dp.message_handler(CommandStart(), state='*')
@@ -25,4 +25,12 @@ async def bot_start(message: types.Message, state: FSMContext):
         await bot.send_message(chat_id=ADMINS[0], text=msg, parse_mode=types.ParseMode.MARKDOWN_V2)
     else:
         await bot.send_message(chat_id=ADMINS[0], text=f"[{make_title(full_name)}](tg://user?id={message.from_user.id}) добавлен в базу ранее", disable_web_page_preview=True, parse_mode=types.ParseMode.MARKDOWN_V2)
-    await message.answer(f"Добро пожаловать\! {make_title(full_name)}", parse_mode=types.ParseMode.MARKDOWN_V2, reply_markup=main_markup)
+    
+    if user:
+        await message.answer_photo("AgACAgIAAxkBAAIC2GSgd4G0D6K2uKmGe4dFLjZNGAZeAALxvjEbXxIJS1e-NrszQ92sAQADAgADeQADLwQ", reply_markup=main_markup)
+    else:
+        reg_user = await db.select_register_info(user_id=int(user['id']))
+        if reg_user:
+            await message.answer(f"👋 Добро пожаловать на глэмпинг-парк «На краю земли»", reply_markup=main_markup)
+        else:
+            await message.answer(f"👋 Добро пожаловать на глэмпинг-парк «На краю земли»", reply_markup=register_markup)

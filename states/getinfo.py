@@ -23,3 +23,8 @@ class GetInfoBron(StatesGroup):
     date = State()
     count_perosons = State()
     check = State()
+
+class GetRegInfo(StatesGroup):
+    first_name = State()
+    last_name = State()
+    phone = State()

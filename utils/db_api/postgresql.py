@@ -112,6 +112,32 @@ class Database:
         """
         await self.execute(sql, execute=True)
 
+    async def create_table_register_info(self):
+        sql = """
+        CREATE TABLE IF NOT EXISTS RegInfo (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        name text NOT NULL,
+        last_name text NOT NULL,
+        phone text NOT NULL
+        );
+        """
+        await self.execute(sql, execute=True)
+    
+    async def select_all_register_info(self):
+        sql = "SELECT * FROM RegInfo"
+        return await self.execute(sql, fetch=True)
+    
+    async def select_register_info(self, **kwargs):
+        sql = "SELECT * FROM RegInfo WHERE "
+        sql, parameters = self.format_args(sql, parameters=kwargs)
+        return await self.execute(sql, *parameters, fetchrow=True)
+
+    async def add_register_info(self, user_id, name, last_name, phone):
+        sql = "INSERT INTO RegInfo (user_id, name, last_name, phone) VALUES($1, $2, $3, $4) returning *"
+        return await self.execute(sql, user_id, name, last_name, phone, fetchrow=True)
+
+
     async def delete_info3(self, title):
         sql = "DELETE FROM Infomation3 WHERE title=$1"
         return await self.execute(sql, title, execute=True)
