@@ -38,7 +38,7 @@ async def do_admin_panel(message: types.Message, state: FSMContext):
     users_list = []
 
     for i in users:
-        users_list.append([str(i['user_id']), str(i['name']), str(i['last_name']), str(i['phone']), str(i['date'])])
+        users_list.append([str(i['user_id']), str(i['name']), str(i['last_name']), str(i['date']), str(i['phone'])])
     createTable(users_list)
 
     with open('table.xlsx', 'rb') as file:

@@ -43,6 +43,7 @@ async def get_last_name(message: types.Message, state: FSMContext):
 
         await GetRegInfo.phone.set()
 
+@dp.message_handler(content_types=['contact'], state=GetRegInfo.phone)
 @dp.message_handler(state=GetRegInfo.phone)
 async def get_phone(message: types.Message, state: FSMContext):
     if message.text:
@@ -60,8 +61,7 @@ async def get_phone(message: types.Message, state: FSMContext):
 
         await GetRegInfo.date.set()
     elif message.contact:
-        contact = message.contact
-        phone = contact.phone_number
+        phone = message.contact.phone_number
         data = await state.get_data()
         name = data['name']
         last_name = data['last_name']
