@@ -90,7 +90,7 @@ async def save_info(message: types.Message, state: FSMContext):
 
 @dp.message_handler(text="🎁 Написать когда ДР", state=GetRegInfo.date)
 async def get_date(message: types.Message, state: FSMContext):
-    await message.answer("Напиши свой день рождения\nв формате\n22.07.1999")
+    await message.answer("Напиши свой день рождения\nв формате\n22.07.1999", reply_markup=ReplyKeyboardRemove())
     await message.answer("⬇️")
     await GetRegInfo.get.set()
     
