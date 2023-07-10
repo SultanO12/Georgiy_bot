@@ -75,7 +75,7 @@ async def get_phone(message: types.Message, state: FSMContext):
 
         await GetRegInfo.date.set()
 
-@dp.message_handler(commads=['menu'], state=GetRegInfo.date)
+@dp.message_handler(commands=['menu'], state=GetRegInfo.date)
 @dp.message_handler(text="🔻Меню", state=GetRegInfo.date)
 async def save_info(message: types.Message, state: FSMContext):
     data = await state.get_data()
