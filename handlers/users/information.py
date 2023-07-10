@@ -199,7 +199,9 @@ async def get_raz_name(message: types.Message, state: FSMContext):
         elif raz_name == "Сплавы на байдарках":
             photo = 'AgACAgIAAxkBAAISBGSoIKYEDWQdyZmflhXXHoP-iq10AAIWyjEbqDNAScOnXIF3wsjcAQADAgADeQADLwQ'
             await state.update_data({"raz_name":raz_name})
-            await message.answer_photo(photo, caption='Сплавы на байдарках организовываются на реке Серёна, Калужская область Козельский район.\n\n❤️‍🔥 (Более 1000 отзывов по хэштгу #splav40 в запрещеной соц. сети) 🤟\n\nРека очень живописная и интересная. Постоянно меняется картинка, пейзажи.\n\nМестами сужается - увеличивается скорость течения\nМестами широкая, как озеро. Очень интересно.\nРечка не широкая, поэтому деревья наклоняются прямо над водой.\n\nЕсть на пути преграды, которые создают динамичность маршруту. Очень интересно!\n\nЕсть однодневные сплавы, а есть двухдневные. Про какие рассказать подробнее? \n\nВАРИАНТЫ ОТВЕТОВ: Однодневный сплав ! Двухдневный сплав  ! Меню', reply_markup=splavs_markup)
+            await message.answer_photo(photo, caption='Сплавы на байдарках организовываются на реке Серёна, Калужская область Козельский район.\n\n❤️‍🔥 (Более 1000 отзывов по хэштгу #splav40 в запрещеной соц. сети) 🤟\n\nРека очень живописная и интересная. Постоянно меняется картинка, пейзажи.\n\nМестами сужается - увеличивается скорость течения\nМестами широкая, как озеро. Очень интересно.\nРечка не широкая, поэтому деревья наклоняются прямо над водой.\n\nЕсть на пути преграды, которые создают динамичность маршруту. Очень интересно!\n\nЕсть однодневные сплавы, а есть двухдневные. Про какие рассказать подробнее?', reply_markup=splavs_markup)
+            video = 'BAACAgIAAxkBAAIRamSm-47ISfXaW33J9I7-cOcbGtZOAAKuKwACD2vBSNWlieHMb0ZTLwQ'
+            await message.answer_video(video)
             await GetInfoRaz.raz_cat_splav.set()
 
 @dp.message_handler(text="🔙  Назад", state=GetInfoRaz.raz_photo_splav)
@@ -268,11 +270,10 @@ async def send_photos_splav(message: types.Message, state: FSMContext):
 @dp.message_handler(text="Смотреть фотографии", state=GetInfoRaz.raz_photo_cvad)
 async def send_photos_cvad(message: types.Message, state: FSMContext):
     photos = ['AgACAgIAAxkBAAIRVmSm-JYP0XAHwpxDHM-xufHU7IPJAAIezjEbLZAxSUS6NGsl2QsIAQADAgADeAADLwQ', 'AgACAgIAAxkBAAIRV2Sm-JY2biqmlklxlUTusbK6-2vQAAIfzjEbLZAxSQ1Kf_PbVZekAQADAgADeQADLwQ', 'AgACAgIAAxkBAAIRWGSm-JYWZ_FynivvgwKnpgaUR8c4AAK8zTEbLZAxSRRlnV6mSceuAQADAgADeQADLwQ', 'AgACAgIAAxkBAAIRWWSm-JbtDiKC_HjoPjDr0S08Zy0yAAIgzjEbLZAxSfNBkUKJmO0GAQADAgADeQADLwQ']
-    videos = ['BAACAgIAAxkBAAIRamSm-47ISfXaW33J9I7-cOcbGtZOAAKuKwACD2vBSNWlieHMb0ZTLwQ', 'BAACAgIAAxkBAAIRaGSm-4G440mcdHkyZMsvHKNhgVj9AAIDNAACLZAxSblJwsAH6n0WLwQ']
+    video = 'BAACAgIAAxkBAAIRaGSm-4G440mcdHkyZMsvHKNhgVj9AAIDNAACLZAxSblJwsAH6n0WLwQ'
     for photo in photos:
         await message.answer_photo(photo, reply_markup=nav_cvad_markup)
-    for video in videos:
-        await message.answer_video(video, reply_markup=nav_cvad_markup)
+    await message.answer_video(video, reply_markup=nav_cvad_markup)
         
 @dp.message_handler(text="🍽 Где поесть", state='*')
 async def do_food(message: types.Message, state: FSMContext):
