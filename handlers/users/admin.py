@@ -49,6 +49,11 @@ async def get_all_users(message: types.Message):
     await db.delete_users()
     await message.answer("База очищена!")
 
+@dp.message_handler(text="/clean_exel", user_id=ADMINS)
+async def get_all_users(message: types.Message):
+    await db.delete_reginfor()
+    await message.answer("База очищена!")
+
 @dp.message_handler(text="🔻Меню", user_id=ADMINS, state=EditChap.cat)
 @dp.message_handler(text="🔻Меню", user_id=ADMINS, state=EditChap.chapter)
 @dp.message_handler(text="/panel", user_id=ADMINS, state='*')

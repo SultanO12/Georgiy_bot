@@ -124,6 +124,9 @@ class Database:
         );
         """
         await self.execute(sql, execute=True)
+
+    async def delete_reginfor(self):
+        await self.execute("DELETE FROM RegInfor WHERE TRUE", execute=True)
     
     async def select_all_register_info(self):
         sql = "SELECT * FROM RegInfor"
