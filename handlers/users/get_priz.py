@@ -56,7 +56,7 @@ async def get_phone(message: types.Message, state: FSMContext):
         await db.add_register_info(user_id['id'], name, last_name, phone)
 
         await message.answer("😍 Отлично!\n\n💖 Теперь мы стали ближе", reply_markup=get_date_markup)
-        await message.answer(f"{name}, на ваш бонусный счет зачислено 1000 ₽. \n\nТы можешь ими воспользоваться у нас глэмпинг-парке, при бронировании домиков или дополнительных услуг")
+        await message.answer(f"{name}, на ваш бонусный счет зачислено 1000 ₽. \n\nТы можешь ими воспользоваться у нас глэмпинге, при бронировании домиков и дополнительных услуг")
         await message.answer(f"{name}, ты можешь сказать мне по секрету, когда у тебя День рождения.  А когда ты решишь отметить его у нас, я 💫подарю тебе скидкуеще на 500 Рублей")
 
         await GetRegInfo.date.set()
@@ -86,7 +86,7 @@ async def save_info(message: types.Message, state: FSMContext):
     user_id = await db.select_user(telegram_id=int(message.from_user.id))
     await db.add_register_info(user_id['id'], name, last_name, phone)
     await state.finish()
-    await message.answer_photo("AgACAgIAAxkBAAIfIWSsC-3saiivUw0jrz5MzPOQkVykAAKDzTEbFWlgSdbJvokJHTYHAQADAgADeQADLwQ", reply_markup=main_markup)
+    await message.answer_photo("AgACAgIAAxkBAAIgUGSsMdIyvjkOU5eZl59jfXa_-Gr5AAIKyzEbrclgSWjEkpUIb5i1AQADAgADeQADLwQ", caption="Переходи в меню и знакомься с нашей базой! Очень рекомендую зайти в \"<b>Домики</b>\" - \"<b>Домик на дереве</b>\" и в \"<b>Развлечения</b>\" - \"<b>Квадроциклы</b>\". Там тебя ждут 🔥 зажигательные 🔥 видеоролики", reply_markup=main_markup)
 
 @dp.message_handler(text="🎁 Написать когда ДР", state=GetRegInfo.date)
 async def get_date(message: types.Message, state: FSMContext):
@@ -107,4 +107,4 @@ async def get(message: types.Message, state: FSMContext):
         user_id = await db.select_user(telegram_id=int(message.from_user.id))
         await db.add_register_info(user_id['id'], name, last_name, phone, date=date)
         await state.finish()
-        await message.answer_photo("AgACAgIAAxkBAAIfIWSsC-3saiivUw0jrz5MzPOQkVykAAKDzTEbFWlgSdbJvokJHTYHAQADAgADeQADLwQ", reply_markup=main_markup)
+        await message.answer_photo("AgACAgIAAxkBAAIgUGSsMdIyvjkOU5eZl59jfXa_-Gr5AAIKyzEbrclgSWjEkpUIb5i1AQADAgADeQADLwQ", caption="Переходи в меню и знакомься с нашей базой! Очень рекомендую зайти в \"<b>Домики</b>\" - \"<b>Домик на дереве</b>\" и в \"<b>Развлечения</b>\" - \"<b>Квадроциклы</b>\". Там тебя ждут 🔥 зажигательные 🔥 видеоролики", reply_markup=main_markup)

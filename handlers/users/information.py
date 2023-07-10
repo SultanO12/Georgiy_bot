@@ -11,7 +11,7 @@ from states.getinfo import *
 async def main_menu(message: types.Message, state: FSMContext):
     await state.finish()
 
-    await message.answer_photo("AgACAgIAAxkBAAIfIWSsC-3saiivUw0jrz5MzPOQkVykAAKDzTEbFWlgSdbJvokJHTYHAQADAgADeQADLwQ", reply_markup=main_markup)
+    await message.answer_photo("AgACAgIAAxkBAAIgUGSsMdIyvjkOU5eZl59jfXa_-Gr5AAIKyzEbrclgSWjEkpUIb5i1AQADAgADeQADLwQ", caption="Переходи в меню и знакомься с нашей базой! Очень рекомендую зайти в \"<b>Домики</b>\" - \"<b>Домик на дереве</b>\" и в \"<b>Развлечения</b>\" - \"<b>Квадроциклы</b>\". Там тебя ждут 🔥 зажигательные 🔥 видеоролики", reply_markup=main_markup)
 
 @dp.message_handler(text="🛎 Забронировать", state='*')
 async def do_boron(message: types.Message, state: FSMContext):

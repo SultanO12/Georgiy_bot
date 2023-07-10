@@ -30,7 +30,7 @@ async def bot_start(message: types.Message, state: FSMContext):
     # await message.answer_photo("AgACAgIAAxkBAAIC2GSgd4G0D6K2uKmGe4dFLjZNGAZeAALxvjEbXxIJS1e-NrszQ92sAQADAgADeQADLwQ", reply_markup=main_markup)
     reg_user = await db.select_register_info(user_id=int(user['id']))
     if reg_user:
-            await message.answer(f"👋 Добро пожаловать на глэмпинг-парк «На краю земли»", reply_markup=main_markup)
+            await message.answer(f"👋 Добро пожаловать на глэмпинг «На краю земли»", reply_markup=main_markup)
     else:
-            await message.answer(f"👋 Добро пожаловать на глэмпинг-парк «На краю земли»", reply_markup=register_markup)
-            await message.answer("😉 Пока загружается мое меню, предлагаю познакомиться и получить 🎁 подарок")
+            await message.answer(f"👋 Добро пожаловать на глэмпинг «На краю земли»", reply_markup=register_markup)
+            await message.answer("😉 Предлагаю познакомиться и получить подарок 🎁")
