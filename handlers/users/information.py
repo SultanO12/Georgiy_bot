@@ -111,7 +111,13 @@ async def get_name(message: types.Message, state: FSMContext):
             caption = caption.replace("\\n", '\n')
             await message.answer_photo(photos[0], caption=home['title'], reply_markup=getinfo_markup)
             await message.answer(caption)
-            
+            if message.text == '🏠 Дом на дереве':
+                video = 'BAACAgIAAxkBAAIZdGSpNfm4wqW8G4X3nzUf-39su0XmAAKxMgACwbk4SUxNoWO8eMN_LwQ'
+                await message.answer_video(video)
+            elif home_name == '🛕А-фрейм с купелью':
+                video1 = 'BAACAgIAAxkBAAIZwmSpQQYiRdaqztsq0E1OeloAARE4PAACuDAAAqgzSEldttuCFzlOwC8E'
+                await message.answer_video(video1)
+
             await state.update_data({"home_name":message.text})
             await GetInfoHoms.home_photos.set()
 
@@ -132,14 +138,9 @@ async def do_home_potos(message: types.Message, state: FSMContext):
             #     videos = home['video'].split()
             #     for video in videos:
             #         await message.answer_video(video, reply_markup=nav_markup)
-            if home_name == '🏠 Дом на дереве':
-                video = 'BAACAgIAAxkBAAIZdGSpNfm4wqW8G4X3nzUf-39su0XmAAKxMgACwbk4SUxNoWO8eMN_LwQ'
-                await message.answer_video(video)
-            elif home_name == '🛕А-фрейм с купелью':
+            if home_name == '🛕А-фрейм с купелью':
                 video1 = 'BAACAgIAAxkBAAIZvmSpPQj1caOOZuOg1SPMD4FkxnFDAAKeMAACqDNISeLcA0MwCRLDLwQ'
-                video2 = 'BAACAgIAAxkBAAIZwmSpQQYiRdaqztsq0E1OeloAARE4PAACuDAAAqgzSEldttuCFzlOwC8E'
                 await message.answer_video(video1)
-                await message.answer_video(video2)
             elif home_name == '🛕Высокий A-фрейм':
                 video = 'BAACAgIAAxkBAAIZwGSpPoIhPTAbeASTWpYGEEUyuDVrAAKoMAACqDNISWcnGrO09s_cLwQ'
                 await message.answer_video(video)
@@ -184,6 +185,8 @@ async def back_5(message: types.Message, state: FSMContext):
 async def back_7(message: types.Message, state: FSMContext):
     photo = 'AgACAgIAAxkBAAIRQGSm7mZgsmc86kNv5QgDoSpMCL05AAK8zTEbLZAxSRRlnV6mSceuAQADAgADeQADLwQ'
     await message.answer_photo(photo, caption="Стоимость погулки: 8,500 руб - 2-х часовая программа для двоих человек на 2-х местном квадрике\n\n🔥В стоимость входит:\n\n✅ Инструктаж и пробный заезд\n✅ Сопровождение инструктора и помощь на всем пути\n✅ Авторский драйвовый подготовленный лесной маршрут\n✅ Фото-видео во время мероприятия на iphone 13 pro\n✅ Шлем\n✅ ГСМ\n\nЕсть 3 варианта сложности прохождения маршрута: легкий / средний  и ЭКСТРИМ. На предварительном прокате решаем вместе, по какому поедем. Всегда сложность можно изменить.\n\nПри этом можно много чего совместить:\n- покататься 2 часа на свежем воздухе\n- насладиться красотой природы\n- промчаться с ветерком\n- получить большое количество положительных эмоций\n- Пересечь водоём 😃\n- и ещё огромный заряд энергии и адреналин 🔥", reply_markup=photos_markup)
+    video = 'BAACAgIAAxkBAAIRaGSm-4G440mcdHkyZMsvHKNhgVj9AAIDNAACLZAxSblJwsAH6n0WLwQ'
+    await message.answer_video(video, reply_markup=nav_cvad_markup)
     await GetInfoRaz.raz_photo_cvad.set()
 
 @dp.message_handler(state=GetInfoRaz.raz_name)
@@ -194,6 +197,9 @@ async def get_raz_name(message: types.Message, state: FSMContext):
         if raz_name == "КВАДРОЦИКЛЫ":
             photo = 'AgACAgIAAxkBAAIRQGSm7mZgsmc86kNv5QgDoSpMCL05AAK8zTEbLZAxSRRlnV6mSceuAQADAgADeQADLwQ'
             await message.answer_photo(photo, caption="Стоимость погулки: 8,500 руб - 2-х часовая программа для двоих человек на 2-х местном квадрике\n\n🔥В стоимость входит:\n\n✅ Инструктаж и пробный заезд\n✅ Сопровождение инструктора и помощь на всем пути\n✅ Авторский драйвовый подготовленный лесной маршрут\n✅ Фото-видео во время мероприятия на iphone 13 pro\n✅ Шлем\n✅ ГСМ\n\nЕсть 3 варианта сложности прохождения маршрута: легкий / средний  и ЭКСТРИМ. На предварительном прокате решаем вместе, по какому поедем. Всегда сложность можно изменить.\n\nПри этом можно много чего совместить:\n- покататься 2 часа на свежем воздухе\n- насладиться красотой природы\n- промчаться с ветерком\n- получить большое количество положительных эмоций\n- Пересечь водоём 😃\n- и ещё огромный заряд энергии и адреналин 🔥", reply_markup=photos_markup)
+            video = 'BAACAgIAAxkBAAIRaGSm-4G440mcdHkyZMsvHKNhgVj9AAIDNAACLZAxSblJwsAH6n0WLwQ'
+            await message.answer_video(video, reply_markup=nav_cvad_markup)
+
             await state.update_data({"raz_name":raz_name})
             await GetInfoRaz.raz_photo_cvad.set()
         elif raz_name == "Сплавы на байдарках":
@@ -272,10 +278,9 @@ async def send_photos_splav(message: types.Message, state: FSMContext):
 @dp.message_handler(text="Смотреть фотографии", state=GetInfoRaz.raz_photo_cvad)
 async def send_photos_cvad(message: types.Message, state: FSMContext):
     photos = ['AgACAgIAAxkBAAIRVmSm-JYP0XAHwpxDHM-xufHU7IPJAAIezjEbLZAxSUS6NGsl2QsIAQADAgADeAADLwQ', 'AgACAgIAAxkBAAIRV2Sm-JY2biqmlklxlUTusbK6-2vQAAIfzjEbLZAxSQ1Kf_PbVZekAQADAgADeQADLwQ', 'AgACAgIAAxkBAAIRWGSm-JYWZ_FynivvgwKnpgaUR8c4AAK8zTEbLZAxSRRlnV6mSceuAQADAgADeQADLwQ', 'AgACAgIAAxkBAAIRWWSm-JbtDiKC_HjoPjDr0S08Zy0yAAIgzjEbLZAxSfNBkUKJmO0GAQADAgADeQADLwQ']
-    video = 'BAACAgIAAxkBAAIRaGSm-4G440mcdHkyZMsvHKNhgVj9AAIDNAACLZAxSblJwsAH6n0WLwQ'
     for photo in photos:
         await message.answer_photo(photo, reply_markup=nav_cvad_markup)
-    await message.answer_video(video, reply_markup=nav_cvad_markup)
+    
         
 @dp.message_handler(text="🍽 Где поесть", state='*')
 async def do_food(message: types.Message, state: FSMContext):
@@ -318,7 +323,7 @@ async def get_coment(message: types.Message, state: FSMContext):
 async def do_contact(message: types.Message, state: FSMContext):
     await state.finish()
 
-    await message.answer("Наши контакты\n\nОтдел бронирования\n📲 +7(920)897-05-55\n📲 +7(905)641-84-20\n🌐 Сайт:  na-krayu-zemli.ru/\n\nГруппа Вконтакте\nhttps://vk.com/splav_na_bajdarkah\n\nНаш Телеграмм канал: @splav40\n\n📲  +7(905)641-84-20 (телефон администратора "На краю земли")\n\n📍Наш адрес: Россия, Калужская область, Козельский район,  ул. Панорамная долина, дом 1, Юдинки.", disable_web_page_preview=True, reply_markup=admin_markup)
+    await message.answer("Наши контакты\n\nОтдел бронирования\n📲 +7(920)897-05-55\n📲 +7(905)641-84-20\n🌐 Сайт:  na-krayu-zemli.ru/\n\nГруппа Вконтакте\nhttps://vk.com/splav_na_bajdarkah\n\nНаш Телеграмм канал: @splav40\n\n📲  +7(905)641-84-20 (телефон администратора \"На краю земли\")\n\n📍Наш адрес: Россия, Калужская область, Козельский район,  ул. Панорамная долина, дом 1, Юдинки.", disable_web_page_preview=True, reply_markup=admin_markup)
     await message.answer("💬⁣", reply_markup=contact_info_markup)
     
 @dp.message_handler(text="🎉 Акции", state='*')

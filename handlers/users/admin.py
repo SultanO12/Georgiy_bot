@@ -12,6 +12,7 @@ from states.send_msg import *
 from states.admin_state import *
 import openpyxl
 
+@dp.message_handler(text="ℹ️ Информация о пользователей", user_id=ADMINS, state='*')
 @dp.message_handler(text="/exel", user_id=ADMINS, state='*')
 async def do_admin_panel(message: types.Message, state: FSMContext):
     def createTable(data):

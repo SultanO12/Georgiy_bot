@@ -26,11 +26,9 @@ async def bot_start(message: types.Message, state: FSMContext):
     else:
         await bot.send_message(chat_id=ADMINS[0], text=f"[{make_title(full_name)}](tg://user?id={message.from_user.id}) добавлен в базу ранее", disable_web_page_preview=True, parse_mode=types.ParseMode.MARKDOWN_V2)
     
-
-    # await message.answer_photo("AgACAgIAAxkBAAIC2GSgd4G0D6K2uKmGe4dFLjZNGAZeAALxvjEbXxIJS1e-NrszQ92sAQADAgADeQADLwQ", reply_markup=main_markup)
     reg_user = await db.select_register_info(user_id=int(user['id']))
     if reg_user:
-            await message.answer(f"👋 Добро пожаловать на глэмпинг «На краю земли»", reply_markup=main_markup)
+            await message.answer(f"👋 Добро пожаловать в глэмпинг «На краю земли»", reply_markup=main_markup)
     else:
-            await message.answer(f"👋 Добро пожаловать на глэмпинг «На краю земли»", reply_markup=register_markup)
+            await message.answer(f"👋 Добро пожаловать в глэмпинг «На краю земли»", reply_markup=register_markup)
             await message.answer("😉 Предлагаю познакомиться и получить подарок 🎁")
