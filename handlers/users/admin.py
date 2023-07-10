@@ -20,13 +20,15 @@ async def do_admin_panel(message: types.Message, state: FSMContext):
         sheet['A1'] = 'ID'
         sheet['B1'] = 'Имя'
         sheet['C1'] = 'Фамилия'
-        sheet['D1'] = 'Телефон'
+        sheet['D1'] = 'Дата рождение'
+        sheet['E1'] = 'Телефон'
         for i, row in enumerate(data, start=2):
-            if len(row) >= 4:
+            if len(row) >= 5:
                 sheet['A{}'.format(i)] = row[0]
                 sheet['B{}'.format(i)] = row[1]
                 sheet['C{}'.format(i)] = row[2]  
                 sheet['D{}'.format(i)] = row[3]
+                sheet['E{}'.format(i)] = row[4]
 
         wb.save('table.xlsx')
 
@@ -36,7 +38,7 @@ async def do_admin_panel(message: types.Message, state: FSMContext):
     users_list = []
 
     for i in users:
-        users_list.append([str(i['user_id']), str(i['name']), str(i['last_name']), str(i['phone'])])
+        users_list.append([str(i['user_id']), str(i['name']), str(i['last_name']), str(i['phone']), str(i['date'])])
     createTable(users_list)
 
     with open('table.xlsx', 'rb') as file:

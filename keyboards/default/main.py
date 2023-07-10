@@ -13,8 +13,11 @@ main_markup.row("📲 Контакты", "🛎 Забронировать")
 register_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 register_markup.add(KeyboardButton("🎁 Получить подарок"), menu)
 
+get_date_markup = ReplyKeyboardMarkup(resize_keyboard=True)
+get_date_markup.add(KeyboardButton("🎁 Отправить ДР"), menu)
+
 send_number_markup = ReplyKeyboardMarkup(resize_keyboard=True)
-send_number_markup.add(KeyboardButton("📞 Отправить номер", request_contact=True))
+send_number_markup.add(KeyboardButton("📞 Contact", request_contact=True))
 
 async def cat_markup(capter_id):
     cats = await db.select_all_categories()

@@ -9,6 +9,7 @@ async def bot_help(message: types.Message, state: FSMContext):
     await state.finish()
     text = ("Команды: ",
             "/start - Запуск бота",
+            "/menu - Меню",
             "/help - Помощь")
     
     await message.answer("\n".join(text))
