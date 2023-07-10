@@ -14,7 +14,7 @@ register_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 register_markup.add(KeyboardButton("🎁 Получить подарок"), menu)
 
 get_date_markup = ReplyKeyboardMarkup(resize_keyboard=True)
-get_date_markup.add(KeyboardButton("🎁 Отправить ДР"), menu)
+get_date_markup.add(KeyboardButton("🎁 Написать когда ДР"), menu)
 
 send_number_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 send_number_markup.add(KeyboardButton("📞 Contact", request_contact=True))
