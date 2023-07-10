@@ -318,7 +318,7 @@ async def get_coment(message: types.Message, state: FSMContext):
 async def do_contact(message: types.Message, state: FSMContext):
     await state.finish()
 
-    await message.answer("Наши контакты\n\nОтдел бронирования\n📲 +7(920)897-05-55\n📲 +7(905)641-84-20\n🌐 Сайт:  na-krayu-zemli.ru/\n\nГруппа Вконтакте\nhttps://vk.com/splav_na_bajdarkah\n\n📲  +7(905)641-84-20 (телефон администратора \"На краю земли\")\n\n📍Наш адрес: Россия, Калужская область, Козельский район,  ул. Панорамная долина, дом 1, Юдинки.", disable_web_page_preview=True, reply_markup=admin_markup)
+    await message.answer("Наши контакты\n\nОтдел бронирования\n📲 +7(920)897-05-55\n📲 +7(905)641-84-20\n🌐 Сайт:  na-krayu-zemli.ru/\n\nГруппа Вконтакте\nhttps://vk.com/splav_na_bajdarkah\n\nНаш Телеграмм канал: @splav40\n\n📲  +7(905)641-84-20 (телефон администратора "На краю земли")\n\n📍Наш адрес: Россия, Калужская область, Козельский район,  ул. Панорамная долина, дом 1, Юдинки.", disable_web_page_preview=True, reply_markup=admin_markup)
     await message.answer("💬⁣", reply_markup=contact_info_markup)
     
 @dp.message_handler(text="🎉 Акции", state='*')
