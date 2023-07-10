@@ -117,6 +117,9 @@ async def get_name(message: types.Message, state: FSMContext):
             elif message.text == '🛕А-фрейм с купелью':
                 video1 = 'BAACAgIAAxkBAAIZwmSpQQYiRdaqztsq0E1OeloAARE4PAACuDAAAqgzSEldttuCFzlOwC8E'
                 await message.answer_video(video1)
+            elif message.text == '🛕Высокий A-фрейм':
+                video = 'BAACAgIAAxkBAAIZwGSpPoIhPTAbeASTWpYGEEUyuDVrAAKoMAACqDNISWcnGrO09s_cLwQ'
+                await message.answer_video(video)
 
             await state.update_data({"home_name":message.text})
             await GetInfoHoms.home_photos.set()
@@ -141,9 +144,7 @@ async def do_home_potos(message: types.Message, state: FSMContext):
             if home_name == '🛕А-фрейм с купелью':
                 video1 = 'BAACAgIAAxkBAAIZvmSpPQj1caOOZuOg1SPMD4FkxnFDAAKeMAACqDNISeLcA0MwCRLDLwQ'
                 await message.answer_video(video1)
-            elif home_name == '🛕Высокий A-фрейм':
-                video = 'BAACAgIAAxkBAAIZwGSpPoIhPTAbeASTWpYGEEUyuDVrAAKoMAACqDNISWcnGrO09s_cLwQ'
-                await message.answer_video(video)
+            
 
 
 @dp.message_handler(text="🥳 Развлечение", state='*')
