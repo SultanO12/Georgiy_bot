@@ -104,9 +104,8 @@ class Database:
     
     async def create_table_infomation3(self):
         sql = """
-        CREATE TABLE IF NOT EXISTS Infomation3 (
+        CREATE TABLE IF NOT EXISTS Aks_info (
         id SERIAL PRIMARY KEY,
-        title text NOT NULL,
         caption text NOT NULL
         );
         """
@@ -143,20 +142,20 @@ class Database:
 
 
     async def delete_info3(self, title):
-        sql = "DELETE FROM Infomation3 WHERE title=$1"
+        sql = "DELETE FROM Aks_info WHERE title=$1"
         return await self.execute(sql, title, execute=True)
     
-    async def update_infomation3(self, title, caption):
-        sql = "UPDATE Infomation3 SET caption=$2 WHERE title=$1 returning *"
-        return await self.execute(sql, title, caption, fetchrow=True)
+    async def update_infomation3(self, id, caption):
+        sql = "UPDATE Aks_info SET caption=$2 WHERE id=$1 returning *"
+        return await self.execute(sql, id, caption, fetchrow=True)
 
-    async def add_infomation3(self, title, caption):
-        sql = "INSERT INTO Infomation3 (title, caption) VALUES($1, $2) returning *"
-        return await self.execute(sql, title, caption, fetchrow=True)
+    async def add_infomation3(self, caption):
+        sql = "INSERT INTO Aks_info (caption) VALUES($1) returning *"
+        return await self.execute(sql, caption, fetchrow=True)
 
     async def select_all_infomation3(self):
         sql = "SELECT * FROM Infomation3"
-        return await self.execute(sql, fetch=True)
+        return await self.execute(sql, fetchrow=True)
 
 
     async def delete_info2(self, title):

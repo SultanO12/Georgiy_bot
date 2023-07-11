@@ -45,6 +45,19 @@ async def do_admin_panel(message: types.Message, state: FSMContext):
     with open('table.xlsx', 'rb') as file:
         await message.answer_document(file)
 
+@dp.message_handler(text="/set_aks", user_id=ADMINS, state='*')
+async def update_aks(message: types.Message, state: FSMContext):
+    await message.answer("Text:")
+    await CreatCatAks.capton.set()
+
+@dp.message_handler(user_id=ADMINS, state=CreatCatAks.capton)
+async def update_aks(message: types.Message, state: FSMContext):
+    aks = await db.select_all_infomation3()
+    if aks:
+        await db.update_infomation3(id=aks['id'], caption=message.text)
+    else:
+        await db.add_infomation3(caption=message.text)
+
 @dp.message_handler(text="/cleandb", user_id=ADMINS)
 async def get_all_users(message: types.Message):
     await db.delete_users()
