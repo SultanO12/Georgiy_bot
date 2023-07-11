@@ -55,9 +55,12 @@ async def update_aks(message: types.Message, state: FSMContext):
     aks = await db.select_all_infomation3()
     if aks:
         await db.update_infomation3(id=aks['id'], caption=message.text)
+        await message.answer("Акции обновлены")
     else:
         await db.add_infomation3(caption=message.text)
-
+        await message.answer("Акция добавлены")
+    await state.finish()
+    
 @dp.message_handler(text="/cleandb", user_id=ADMINS)
 async def get_all_users(message: types.Message):
     await db.delete_users()

@@ -154,7 +154,7 @@ class Database:
         return await self.execute(sql, caption, fetchrow=True)
 
     async def select_all_infomation3(self):
-        sql = "SELECT * FROM Infomation3"
+        sql = "SELECT * FROM Aks_info"
         return await self.execute(sql, fetchrow=True)
 
 
