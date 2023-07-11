@@ -26,10 +26,10 @@ async def check_1(message: types.Message, state: FSMContext):
       await state.update_data({"name":name})
       await GetRegInfo.first_name.set()
 
-@dp.callback_query_handler(text=['yes', 'no'] ,state=GetRegInfo.first_name)
+@dp.callback_query_handler(text=['yes', 'no'], state=GetRegInfo.first_name)
 async def get_name(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
-    data = state.get_data()
+    data = await state.get_data()
     name = data['name']
     if call.data == 'yes':
       
@@ -65,6 +65,7 @@ async def get_last_name(call: types.CallbackQuery, state: FSMContext):
     else:
         await call.message.answer(f"Напишите свою фамилию")
         await call.message.answer("⬇️")
+        await GetRegInfo.check_last_name.set()
 
 @dp.message_handler(content_types=['contact'], state=GetRegInfo.phone)
 @dp.message_handler(state=GetRegInfo.phone)
