@@ -39,16 +39,10 @@ async def get_name(call: types.CallbackQuery, state: FSMContext):
 
       await GetRegInfo.check_last_name.set()
     else:
-            await state.finish()
+        await call.message.answer("🖐 Как тебя зовут?", reply_markup=ReplyKeyboardRemove())
+        await call.message.answer("⬇️")
 
-            user = await db.select_user(telegram_id=call.from_user.id)
-            reg_user = await db.select_register_info(user_id=int(user['id']))
-
-            if reg_user is None:
-                await call.message.answer("🖐 Как тебя зовут?", reply_markup=ReplyKeyboardRemove())
-                await call.message.answer("⬇️")
-
-                await GetRegInfo.check_first_name.set()
+        await GetRegInfo.check_first_name.set()
 
 @dp.message_handler(state=GetRegInfo.check_last_name)
 async def check_1(message: types.Message, state: FSMContext):
