@@ -55,10 +55,7 @@ async def creat_markup_raz():
 
 async def creat_markup_aks():
     raz_cat_markup = ReplyKeyboardMarkup(resize_keyboard=True)
-    buttons = await db.select_all_infomation3()
-    for button in buttons:
-        raz_cat_markup.insert(KeyboardButton(f"{button['title']}"))
-    raz_cat_markup.add(menu)
+    raz_cat_markup.add(menu, bron)
     return raz_cat_markup
 
 nav_markup = ReplyKeyboardMarkup(resize_keyboard=True)

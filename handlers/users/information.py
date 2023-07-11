@@ -332,27 +332,7 @@ async def do_aks(message: types.Message, state: FSMContext):
     await state.finish()
 
     markup = await creat_markup_aks()
-    await message.answer("Акции:", reply_markup=markup)
-    await GetInfoAks.aks_name.set()
-
-@dp.message_handler(text="🔙 Назад", state=GetInfoAks.aks_name)
-async def back_3(message: types.Message, state: FSMContext):
-    await state.finish()
-
-    markup = await creat_markup_aks()
-    await message.answer("Акции:", reply_markup=markup)
-    await GetInfoAks.aks_name.set()
-
-
-@dp.message_handler(state=GetInfoAks.aks_name)
-async def do_aks(message: types.Message, state: FSMContext):
-    aks = message.text 
-    if aks:
-        aksiyi = await db.select_all_infomation3()
-        for aksya in aksiyi:
-            if aks == aksya['title']:
-                await message.answer(aksya['caption'], reply_markup=nav_markup)
-                break
+    await message.answer("Здравствуйте, на данный момент действуют следующие акции:\n\n1. Раннее бронирование на осень, с 1 сентября по 30 ноября скидка при заселении с ВСК по ЧТ.\n\n20% скидка при бронировании до 16.07\n15% скидка при бронировании с 17.07 по 31.07 \n10% при бронировании с 01.08 по 14.08\n\n2. Скидка на день рождение 20%.\n\nДействует с 01.09.23 по 31.05.24 (при заселении с ВСК по ЧТ)\n\nP.S. Если у вас день рождение летом - вы можете воспользоваться скидкой в другую пору года", reply_markup=markup)
 
 @dp.message_handler(text="🚗 Как добраться", state='*')
 async def do_aks(message: types.Message, state: FSMContext):
