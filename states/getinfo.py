@@ -26,7 +26,11 @@ class GetInfoBron(StatesGroup):
 
 class GetRegInfo(StatesGroup):
     first_name = State()
+    check_first_name = State()
     last_name = State()
+    check_last_name = State()
     phone = State()
+    check_phone = State()
     date = State()
+    check_date = State()
     get = State()

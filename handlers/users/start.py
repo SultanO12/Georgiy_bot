@@ -29,6 +29,13 @@ async def bot_start(message: types.Message, state: FSMContext):
     reg_user = await db.select_register_info(user_id=int(user['id']))
     if reg_user:
             await message.answer(f"👋 Добро пожаловать в глэмпинг «На краю земли»", reply_markup=main_markup)
+            await message.answer_photo("AgACAgIAAxkBAAIgUGSsMdIyvjkOU5eZl59jfXa_-Gr5AAIKyzEbrclgSWjEkpUIb5i1AQADAgADeQADLwQ")
     else:
-            await message.answer(f"👋 Добро пожаловать в глэмпинг «На краю земли»", reply_markup=register_markup)
-            await message.answer("😉 Предлагаю познакомиться и получить подарок 🎁")
+            await message.answer(f"👋 Добро пожаловать в глэмпинг «На краю земли»\n\n😉 Предлагаю познакомиться и получить подарок 🎁 \nЧтобы забрать свой ПРОМОКОД - ответь на 3 вопроса ниже 👇", reply_markup=register_markup)
+            await message.answer_photo("AgACAgIAAxkBAAIgUGSsMdIyvjkOU5eZl59jfXa_-Gr5AAIKyzEbrclgSWjEkpUIb5i1AQADAgADeQADLwQ")
+
+@dp.message_handler(commands=['menu'], state='*')
+async def main_menu(message: types.Message, state: FSMContext):
+    await state.finish()
+
+    await message.answer_photo("AgACAgIAAxkBAAIgUGSsMdIyvjkOU5eZl59jfXa_-Gr5AAIKyzEbrclgSWjEkpUIb5i1AQADAgADeQADLwQ", reply_markup=main_markup)
