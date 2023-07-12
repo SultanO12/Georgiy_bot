@@ -74,10 +74,7 @@ async def get_phone(message: types.Message, state: FSMContext):
         phone = message.text
         data = await state.get_data()
         name = data['name']
-        last_name = data['last_name']
         await state.update_data({"phone":phone})
-        user_id = await db.select_user(telegram_id=int(message.from_user.id))
-        await db.add_register_info(user_id['id'], name, last_name, phone)
 
         await message.answer("😍 Отлично!\n\n💖 Теперь мы стали ближе", reply_markup=get_date_markup)
         await message.answer(f"{name}, на ваш бонусный счет зачислено 1000 ₽. \n\nТы можешь ими воспользоваться у нас глэмпинге, при бронировании домиков и дополнительных услуг")
@@ -88,7 +85,6 @@ async def get_phone(message: types.Message, state: FSMContext):
         phone = message.contact.phone_number
         data = await state.get_data()
         name = data['name']
-        last_name = data['last_name']
         await state.update_data({"phone":phone})
 
         

@@ -18,7 +18,7 @@ async def do_admin_panel(message: types.Message, state: FSMContext):
     def createTable(data):
         wb = openpyxl.Workbook()
         sheet = wb.active
-        sheet['A1'] = 'ID'
+        sheet['A1'] = 'Telegram ID'
         sheet['B1'] = 'Имя'
         sheet['C1'] = 'Фамилия'
         sheet['D1'] = 'Дата рождение'
@@ -35,11 +35,13 @@ async def do_admin_panel(message: types.Message, state: FSMContext):
 
 
     users = await db.select_all_register_info()
-
     users_list = []
 
     for i in users:
-        users_list.append([str(i['user_id']), str(i['name']), str(i['last_name']), str(i['date']), str(i['phone'])])
+        user_id = i['id']
+        user = await db.select_user(id=int(user_id))
+        telegram_id = user['id']
+        users_list.append([str(telegram_id), str(i['name']), str(i['last_name']), str(i['date']), str(i['phone'])])
     createTable(users_list)
 
     with open('table.xlsx', 'rb') as file:
@@ -55,12 +57,12 @@ async def update_aks(message: types.Message, state: FSMContext):
     aks = await db.select_all_infomation3()
     if aks:
         await db.update_infomation3(id=aks['id'], caption=message.text)
-        await message.answer("Акции обновлены")
+        await message.answer("Акция обновлена")
     else:
         await db.add_infomation3(caption=message.text)
-        await message.answer("Акция добавлены")
+        await message.answer("Акция добавлен")
     await state.finish()
-    
+
 @dp.message_handler(text="/cleandb", user_id=ADMINS)
 async def get_all_users(message: types.Message):
     await db.delete_users()
