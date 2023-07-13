@@ -80,25 +80,26 @@ async def do_admin_panel(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer("Добро пожаловать в панель администратора!", reply_markup=main_admin_markup)
 
-@dp.message_handler(text="👥 Всего пользователей", user_id=ADMINS)
+@dp.message_handler(text="👥 Количество пользователей", user_id=ADMINS)
 async def get_all_users(message: types.Message):
-    users = await db.select_all_users()
-    id = []
-    name = []
-    for user in users:
-        id.append(user[-1])
-        name.append(user[1])
-    data = {
-        "Telegram ID": id,
-        "Name": name
-    }
-    pd.options.display.max_rows = 10000
-    df = pd.DataFrame(data)
-    if len(df) > 50:
-        for x in range(0, len(df), 50):
-            await bot.send_message(message.chat.id, df[x:x + 50])
-    else:
-       await bot.send_message(message.chat.id, df)
+    users = await db.count_users()
+    await message.answer(users)
+    # id = []
+    # name = []
+    # for user in users:
+    #     id.append(user[-1])
+    #     name.append(user[1])
+    # data = {
+    #     "Telegram ID": id,
+    #     "Name": name
+    # }
+    # pd.options.display.max_rows = 10000
+    # df = pd.DataFrame(data)
+    # if len(df) > 50:
+    #     for x in range(0, len(df), 50):
+    #         await bot.send_message(message.chat.id, df[x:x + 50])
+    # else:
+    #    await bot.send_message(message.chat.id, df)
 
 @dp.message_handler(text="📋 Разделы", user_id=ADMINS)
 async def do_cat(message: types.Message, state: FSMContext):
