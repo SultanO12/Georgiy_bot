@@ -40,7 +40,7 @@ async def do_admin_panel(message: types.Message, state: FSMContext):
     for i in users:
         user_id = i['id']
         user = await db.select_user(id=int(user_id))
-        telegram_id = user['id']
+        telegram_id = user['telegram_id']
         users_list.append([str(telegram_id), str(i['name']), str(i['last_name']), str(i['date']), str(i['phone'])])
     createTable(users_list)
 

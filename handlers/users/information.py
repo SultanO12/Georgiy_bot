@@ -16,9 +16,17 @@ async def main_menu(message: types.Message, state: FSMContext):
 @dp.message_handler(text="🛎 Забронировать", state='*')
 async def do_boron(message: types.Message, state: FSMContext):
     await state.finish()
-
-    await message.answer("Пожалуйста, введите свое полное имя для бронирования: 👇", reply_markup=ReplyKeyboardRemove())
-    await message.answer("⬇️")
+    user = await db.select_user(telegram_id=int(message.from_user.id))
+    user_info = await db.select_register_info(user_id=int(user['id']))
+    if user_info:
+        name = user_info['name']
+        await state.update_data({"name":name})
+        await message.answer("Пожалуйста, введите свой телефон номер: 👇", reply_markup=send_number_markup)
+        await message.answer("⬇️")
+        await GetInfoBron.phone_num.set()
+    else:
+        await message.answer("Пожалуйста, введите свое полное имя для бронирования: 👇", reply_markup=ReplyKeyboardRemove())
+        await message.answer("⬇️")
 
     await GetInfoBron.full_name.set()
 
@@ -27,15 +35,19 @@ async def get_name(message: types.Message, state: FSMContext):
     name = message.text
     
     await state.update_data({"name":name})
-    await message.answer("Введите свой телефон номер: 👇")
+    await message.answer("Введите свой телефон номер: 👇", reply_markup=send_number_markup)
     await message.answer("⬇️")
 
     await GetInfoBron.phone_num.set()
 
+@dp.message_handler(content_types=['contact'], state=GetInfoBron.phone_num)
 @dp.message_handler(state=GetInfoBron.phone_num)
 async def get_phone(message: types.Message, state: FSMContext):
-    phone_num = message.text
-    
+    if message.text:
+        phone_num = message.text
+    elif message.contact:
+        phone_num = message.contact.phone_number
+
     await state.update_data({"phone_num":phone_num})
     await message.answer("Введите дату, на которую вы хотите забронировать \n\nНапример: 15 Июля 👇", reply_markup=check_date)
     await message.answer("⬇️")
