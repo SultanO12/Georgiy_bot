@@ -28,7 +28,7 @@ async def do_boron(message: types.Message, state: FSMContext):
         await message.answer("Пожалуйста, введите свое полное имя для бронирования: 👇", reply_markup=ReplyKeyboardRemove())
         await message.answer("⬇️")
 
-    await GetInfoBron.full_name.set()
+        await GetInfoBron.full_name.set()
 
 @dp.message_handler(state=GetInfoBron.full_name)
 async def get_name(message: types.Message, state: FSMContext):
@@ -90,19 +90,19 @@ async def cheking(call: types.CallbackQuery, state: FSMContext):
 
 
     if call.data == 'yes':
-        chat_id = '-900586245'
+        chat_id = '-1001791964898'
 
         msg = f"Имя: {name}\nТелефон номер: {phone_num}\nДата бронирование: {date}\nВсего людей: {count_perosons}"
         await bot.send_message(chat_id=chat_id, text=msg)
         
         await state.finish()
         await call.message.answer("Заявка успешно отправлена, скоро с вами свяжутся наши операторы! ✅", reply_markup=main_markup)
-        await call.message.answer_photo("AgACAgIAAxkBAAIC2GSgd4G0D6K2uKmGe4dFLjZNGAZeAALxvjEbXxIJS1e-NrszQ92sAQADAgADeQADLwQ")
+        await call.message.answer_photo("AgACAgIAAxkBAAIgUGSsMdIyvjkOU5eZl59jfXa_-Gr5AAIKyzEbrclgSWjEkpUIb5i1AQADAgADeQADLwQ")
     else:
         await state.finish()
 
         await call.message.answer("Заявка на бронирование отменена!", reply_markup=main_markup)
-        await call.message.answer_photo("AgACAgIAAxkBAAIC2GSgd4G0D6K2uKmGe4dFLjZNGAZeAALxvjEbXxIJS1e-NrszQ92sAQADAgADeQADLwQ")
+        await call.message.answer_photo("AgACAgIAAxkBAAIgUGSsMdIyvjkOU5eZl59jfXa_-Gr5AAIKyzEbrclgSWjEkpUIb5i1AQADAgADeQADLwQ")
 
 @dp.message_handler(text="🔙 Назад", state=GetInfoHoms.home_photos)
 @dp.message_handler(text="🏡 Домики", state='*')
