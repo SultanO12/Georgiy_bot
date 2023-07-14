@@ -6,6 +6,7 @@ back = KeyboardButton("🔙 Назад")
 
 main_admin_markup = ReplyKeyboardMarkup(resize_keyboard=True)
 main_admin_markup.add(KeyboardButton("👥 Количество пользователей"))
+main_admin_markup.row("👥 Всего пользователей")
 main_admin_markup.row("ℹ️ Информация о пользователей")
 main_admin_markup.row("🗣 Рассылка")
 
