@@ -20,11 +20,11 @@ async def bot_start(message: types.Message, state: FSMContext):
             username=message.from_user.username,
         )
         # Сообщаем админу
-        count = await db.count_users()
-        msg = f"[{make_title(user['full_name'])}](tg://user?id={user['telegram_id']}) добавлен на базу\.\nНа базе {count} пользователей\."
-        await bot.send_message(chat_id=ADMINS[0], text=msg, parse_mode=types.ParseMode.MARKDOWN_V2)
-    else:
-        await bot.send_message(chat_id=ADMINS[0], text=f"[{make_title(full_name)}](tg://user?id={message.from_user.id}) добавлен в базу ранее", disable_web_page_preview=True, parse_mode=types.ParseMode.MARKDOWN_V2)
+    #     count = await db.count_users()
+    #     msg = f"[{make_title(user['full_name'])}](tg://user?id={user['telegram_id']}) добавлен на базу\.\nНа базе {count} пользователей\."
+    #     await bot.send_message(chat_id=ADMINS[0], text=msg, parse_mode=types.ParseMode.MARKDOWN_V2)
+    # else:
+    #     await bot.send_message(chat_id=ADMINS[0], text=f"[{make_title(full_name)}](tg://user?id={message.from_user.id}) добавлен в базу ранее", disable_web_page_preview=True, parse_mode=types.ParseMode.MARKDOWN_V2)
     
     reg_user = await db.select_register_info(user_id=int(user['id']))
     if reg_user:
