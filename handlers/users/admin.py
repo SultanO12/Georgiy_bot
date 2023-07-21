@@ -387,7 +387,7 @@ async def get_msg(message: types.Message, state: FSMContext):
             except:
                 await message.answer(f"Рассылка не отправлено id - {user[-1]}")
 
-    await message.delete(sms)
+    await bot.delete_message(chat_id=message.from_user.id, message_id=sms.message_id)
     await state.finish()
     await message.answer("Рассылка успешно отправлена! ✅", reply_markup=main_admin_markup)
 
