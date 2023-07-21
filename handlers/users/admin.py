@@ -366,7 +366,7 @@ async def get_msg(message: types.Message, state: FSMContext):
                 await bot.send_photo(user[-1], photo=photo_id, caption=caption)
                 await asyncio.sleep(0.05)
             except:
-                await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+                await message.answer(f"Рассылка не отправлено id - {user    [-1]}")
     elif message.text:
         msg = message.text
 
