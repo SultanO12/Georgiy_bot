@@ -343,7 +343,7 @@ async def get_chap(message: types.Message, state: FSMContext):
 async def send_mg(message: types.Message, state: FSMContext):
     await state.finish()
 
-    await message.answer("Отправьте фото с текстом или просто текст:", reply_markup=cancellations)
+    await message.answer("Отправьте фото/видео с текстом или просто текст:", reply_markup=cancellations)
     await GetMessage.msg.set()
     
 @dp.message_handler(text="❌ Отменить", state=GetMessage.msg, user_id=ADMINS)
@@ -352,9 +352,9 @@ async def cancel(message: types.Message, state: FSMContext):
 
     await message.answer("Рассылка отменена!", reply_markup=main_admin_markup)
 
-@dp.message_handler(content_types=['photo', 'text'], state=GetMessage.msg)
+@dp.message_handler(content_types=['photo', 'video', 'text'], state=GetMessage.msg)
 async def get_msg(message: types.Message, state: FSMContext):
-    admin = message.from_user.id
+    sms = await message.answer("Рассылка начался...")
     users = await db.select_all_users()
 
     if message.photo:
@@ -367,7 +367,7 @@ async def get_msg(message: types.Message, state: FSMContext):
                 await asyncio.sleep(0.05)
             except:
                 await message.answer(f"Рассылка не отправлено id - {user[-1]}")
-    else:
+    elif message.text:
         msg = message.text
 
         for user in users:
@@ -376,7 +376,18 @@ async def get_msg(message: types.Message, state: FSMContext):
                 await asyncio.sleep(0.05)
             except:
                 await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+    else:
+        video_id = message.video.file_id
+        caption = message.caption
 
+        for user in users:
+            try:
+                await bot.send_video(user[-1], video=video_id, caption=caption)
+                await asyncio.sleep(0.05)
+            except:
+                await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+
+    await message.delete(sms)
     await state.finish()
     await message.answer("Рассылка успешно отправлена! ✅", reply_markup=main_admin_markup)
 
