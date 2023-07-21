@@ -336,8 +336,45 @@ async def get_chap(message: types.Message, state: FSMContext):
     else:
         await message.answer("Не найдено ни одного категори:", reply_markup=addcat_markup)
 
+@dp.message_handler(text="🗣 Рассылка (фото)", user_id=ADMINS)
+async def rass(message: types.Message, state: FSMContext):
+    await state.finish()
 
+    await message.answer("Отправьте фото ID <b>через пробел</b>:", reply_markup=cancellations)
+    await GetMessage.msg2.set()
+
+@dp.message_handler(content_types=['text'], state=GetMessage.msg2)
+async def get_msg(message: types.Message, state: FSMContext):
+    photo_ids = message.text.split()
+    await state.update_data({"photo_ids":photo_ids})
+    await message.answer("Отправтье описание:")
+    await GetMessage.caption.set()
+
+@dp.message_handler(content_types=['text'], state=GetMessage.caption)
+async def get_msg(message: types.Message, state: FSMContext): 
+    data = await state.get_data()
+    photo_ids = data['photo_ids'][:-1]
+    photo_id_caption = photo_ids[-1]
+    caption = message.text
+
+    sms = await message.answer("Рассылка начался...")
+    users = await db.select_all_users()
+
+    media = types.MediaGroup()
+    for photo_id in photo_ids:
+        media.attach_photo(photo=photo_id)
+    media.attach_photo(photo=photo_id_caption, caption=caption)
     
+    for user in users:
+            try:
+                await bot.send_media_group(user[-1], media=media)
+                await asyncio.sleep(0.05)
+            except:
+                await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+    
+    await bot.delete_message(chat_id=message.from_user.id, message_id=sms.message_id)
+    await state.finish()
+    await message.answer("Рассылка успешно отправлена! ✅", reply_markup=main_admin_markup)
 
 @dp.message_handler(text="🗣 Рассылка", user_id=ADMINS)
 async def send_mg(message: types.Message, state: FSMContext):
@@ -346,7 +383,7 @@ async def send_mg(message: types.Message, state: FSMContext):
     await message.answer("Отправьте фото/видео с текстом или просто текст:", reply_markup=cancellations)
     await GetMessage.msg.set()
     
-@dp.message_handler(text="❌ Отменить", state=GetMessage.msg, user_id=ADMINS)
+@dp.message_handler(text="❌ Отменить", state=[GetMessage.msg, GetMessage.msg2], user_id=ADMINS)
 async def cancel(message: types.Message, state: FSMContext):
     await state.finish()
 
@@ -366,7 +403,7 @@ async def get_msg(message: types.Message, state: FSMContext):
                 await bot.send_photo(user[-1], photo=photo_id, caption=caption)
                 await asyncio.sleep(0.05)
             except:
-                await message.answer(f"Рассылка не отправлено id - {user    [-1]}")
+                await message.answer(f"Рассылка не отправлено id - {user[-1]}")
     elif message.text:
         msg = message.text
 
@@ -391,17 +428,17 @@ async def get_msg(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer("Рассылка успешно отправлена! ✅", reply_markup=main_admin_markup)
 
-@dp.message_handler(text="🆔 Получить Photo/Video ID", user_id=ADMINS)
+@dp.message_handler(text="🆔 Получить фото ID", user_id=ADMINS)
 async def do_cat(message: types.Message, state: FSMContext):
     await state.finish()
 
-    await message.answer("Отправьте фото или видео:")
+    await message.answer("Отправьте фото:")
 
 @dp.message_handler(content_types=['photo'], user_id=ADMINS)
 async def get_file_id(message: types.Message):
     await message.answer(message.photo[-1]['file_id'])
 
-@dp.message_handler(content_types=['video'], user_id=ADMINS)
-async def process_video(message: types.Message):
-    video_file_id = message.video.file_id
-    await message.reply(video_file_id)
+# @dp.message_handler(content_types=['video'], user_id=ADMINS)
+# async def process_video(message: types.Message):
+#     video_file_id = message.video.file_id
+#     await message.reply(video_file_id)

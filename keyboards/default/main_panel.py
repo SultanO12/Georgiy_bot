@@ -9,6 +9,8 @@ main_admin_markup.add(KeyboardButton("👥 Количество пользова
 main_admin_markup.row("👥 Всего пользователей")
 main_admin_markup.row("ℹ️ Информация о пользователей")
 main_admin_markup.row("🗣 Рассылка")
+main_admin_markup.row("🗣 Рассылка (фото)")
+main_admin_markup.row("🆔 Получить фото ID")
 
 cancellations = ReplyKeyboardMarkup(resize_keyboard=True)
 cancellations.add("❌ Отменить")
