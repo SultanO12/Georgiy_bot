@@ -342,6 +342,7 @@ async def cancel(message: types.Message, state: FSMContext):
 
     await message.answer("Рассылка отменена!", reply_markup=main_admin_markup)
 
+
 @dp.message_handler(text="🗣 Рассылка (фото)", user_id=ADMINS)
 async def rass(message: types.Message, state: FSMContext):
     await state.finish()
