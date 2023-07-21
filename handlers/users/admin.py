@@ -336,6 +336,12 @@ async def get_chap(message: types.Message, state: FSMContext):
     else:
         await message.answer("Не найдено ни одного категори:", reply_markup=addcat_markup)
 
+@dp.message_handler(text="❌ Отменить", state=[GetMessage.msg, GetMessage.msg2, GetMessage.caption], user_id=ADMINS)
+async def cancel(message: types.Message, state: FSMContext):
+    await state.finish()
+
+    await message.answer("Рассылка отменена!", reply_markup=main_admin_markup)
+
 @dp.message_handler(text="🗣 Рассылка (фото)", user_id=ADMINS)
 async def rass(message: types.Message, state: FSMContext):
     await state.finish()
@@ -382,12 +388,6 @@ async def send_mg(message: types.Message, state: FSMContext):
 
     await message.answer("Отправьте фото/видео с текстом или просто текст:", reply_markup=cancellations)
     await GetMessage.msg.set()
-    
-@dp.message_handler(text="❌ Отменить", state=[GetMessage.msg, GetMessage.msg2], user_id=ADMINS)
-async def cancel(message: types.Message, state: FSMContext):
-    await state.finish()
-
-    await message.answer("Рассылка отменена!", reply_markup=main_admin_markup)
 
 @dp.message_handler(content_types=['photo', 'video', 'text'], state=GetMessage.msg)
 async def get_msg(message: types.Message, state: FSMContext):
