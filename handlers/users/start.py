@@ -9,8 +9,8 @@ from keyboards.default.main import main_markup, register_markup
 import time
 
 async def send_ad(telegram_id):
-      time.sleep(900)
-      await bot.send_message(chat_id=int(telegram_id), text="Подписывайтесь на наш основной КАНАЛ - @splav40 \n\nТам свежие новости и яркие кадры с отдыха 🔥❤️")
+    await asyncio.sleep(900)
+    await bot.send_message(chat_id=int(telegram_id), text="Подписывайтесь на наш основной КАНАЛ - @splav40 \n\nТам свежие новости и яркие кадры с отдыха 🔥❤️")
 
 @dp.message_handler(CommandStart(), state='*')
 async def bot_start(message: types.Message, state: FSMContext):
@@ -36,10 +36,11 @@ async def bot_start(message: types.Message, state: FSMContext):
             await message.answer(f"👋 Добро пожаловать в глэмпинг «На краю земли»", reply_markup=main_markup)
             await message.answer_photo("AgACAgIAAxkBAAIgUGSsMdIyvjkOU5eZl59jfXa_-Gr5AAIKyzEbrclgSWjEkpUIb5i1AQADAgADeQADLwQ")
     else:
-            await send_ad(message.from_user.id)
             await message.answer(f"👋 Добро пожаловать в глэмпинг «На краю земли»\n\n😉 Предлагаю познакомиться и получить подарок 🎁 \nЧтобы забрать свой ПРОМОКОД - ответь на 3 вопроса ниже 👇", reply_markup=register_markup)
             await message.answer_photo("AgACAgIAAxkBAAIgUGSsMdIyvjkOU5eZl59jfXa_-Gr5AAIKyzEbrclgSWjEkpUIb5i1AQADAgADeQADLwQ")
 
+    asyncio.create_task(send_ad(message.from_user.id))
+    
 @dp.message_handler(commands=['menu'], state='*')
 async def main_menu(message: types.Message, state: FSMContext):
     await state.finish()
