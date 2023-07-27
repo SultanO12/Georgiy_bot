@@ -6,9 +6,10 @@ from loader import dp, db, bot
 from data.config import ADMINS
 from utils.extra_datas import make_title
 from keyboards.default.main import main_markup, register_markup
+import time
 
 async def send_ad(telegram_id):
-      await asyncio.sleep(900)
+      time.sleep(900)
       await bot.send_message(chat_id=int(telegram_id), text="Подписывайтесь на наш основной КАНАЛ - @splav40 \n\nТам свежие новости и яркие кадры с отдыха 🔥❤️")
 
 @dp.message_handler(CommandStart(), state='*')

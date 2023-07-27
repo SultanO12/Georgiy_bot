@@ -52,10 +52,10 @@ async def get_phone(message: types.Message, state: FSMContext):
     if message.text:
         phone_num = message.text
     elif message.contact:
-        phone_num = message.contact.phone_number
+        phone_num = message.contact.phone_number    
 
     # Проверяем валидность номера телефона
-    if is_valid_phone_number(phone_num):
+    if await is_valid_phone_number(phone_num):
         await state.update_data({"phone_num": phone_num})
         await message.answer("Введите дату, на которую вы хотите забронировать \n\nНапример: 15 Июля 👇", reply_markup=check_date)
         await message.answer("⬇️")
