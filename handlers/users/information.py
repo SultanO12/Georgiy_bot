@@ -1,3 +1,4 @@
+import re
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from loader import dp, db, bot
@@ -5,6 +6,11 @@ from keyboards.default.main import *
 from keyboards.inline.contect_info import admin_markup, contact_markup
 from keyboards.inline.check_info import check_markup
 from states.getinfo import *
+
+async def is_valid_phone_number(phone_num):
+    # Шаблон для проверки телефонного номера (простой пример)
+    phone_pattern = r'^\+?\d{1,3}?[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{1,5}[-.\s]?\d{1,5}[-.\s]?\d{1,9}$'
+    return re.match(phone_pattern, phone_num)
 
 @dp.message_handler(commands=['menu'], state='*')
 @dp.message_handler(text="🔻Меню", state='*')
@@ -48,11 +54,14 @@ async def get_phone(message: types.Message, state: FSMContext):
     elif message.contact:
         phone_num = message.contact.phone_number
 
-    await state.update_data({"phone_num":phone_num})
-    await message.answer("Введите дату, на которую вы хотите забронировать \n\nНапример: 15 Июля 👇", reply_markup=check_date)
-    await message.answer("⬇️")
-
-    await GetInfoBron.date.set()
+    # Проверяем валидность номера телефона
+    if is_valid_phone_number(phone_num):
+        await state.update_data({"phone_num": phone_num})
+        await message.answer("Введите дату, на которую вы хотите забронировать \n\nНапример: 15 Июля 👇", reply_markup=check_date)
+        await message.answer("⬇️")
+        await GetInfoBron.date.set()
+    else:
+        await message.answer("Пожалуйста, введите корректный номер телефона.")
 
 @dp.message_handler(state=GetInfoBron.date)
 async def get_date(message: types.Message, state: FSMContext):
@@ -91,8 +100,10 @@ async def cheking(call: types.CallbackQuery, state: FSMContext):
 
     if call.data == 'yes':
         chat_id = '-1001791964898'
-
-        msg = f"Имя: {name}\nТелефон номер: {phone_num}\nДата бронирование: {date}\nВсего людей: {count_perosons}"
+        if call.from_user.username:
+            msg = f"Username: @{call.from_user.username}\nИмя: {name}\nТелефон номер: {phone_num}\nДата бронирование: {date}\nВсего людей: {count_perosons}"
+        else:
+            msg = f"Username: @None\nИмя: {name}\nТелефон номер: {phone_num}\nДата бронирование: {date}\nВсего людей: {count_perosons}"
         await bot.send_message(chat_id=chat_id, text=msg)
         
         await state.finish()

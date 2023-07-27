@@ -1,3 +1,4 @@
+import asyncio
 from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
 from aiogram.dispatcher import FSMContext
@@ -6,6 +7,9 @@ from data.config import ADMINS
 from utils.extra_datas import make_title
 from keyboards.default.main import main_markup, register_markup
 
+async def send_ad(telegram_id):
+      await asyncio.sleep(900)
+      await bot.send_message(chat_id=int(telegram_id), text="Подписывайтесь на наш основной КАНАЛ - @splav40 \n\nТам свежие новости и яркие кадры с отдыха 🔥❤️")
 
 @dp.message_handler(CommandStart(), state='*')
 async def bot_start(message: types.Message, state: FSMContext):
@@ -31,6 +35,7 @@ async def bot_start(message: types.Message, state: FSMContext):
             await message.answer(f"👋 Добро пожаловать в глэмпинг «На краю земли»", reply_markup=main_markup)
             await message.answer_photo("AgACAgIAAxkBAAIgUGSsMdIyvjkOU5eZl59jfXa_-Gr5AAIKyzEbrclgSWjEkpUIb5i1AQADAgADeQADLwQ")
     else:
+            await send_ad(message.from_user.id)
             await message.answer(f"👋 Добро пожаловать в глэмпинг «На краю земли»\n\n😉 Предлагаю познакомиться и получить подарок 🎁 \nЧтобы забрать свой ПРОМОКОД - ответь на 3 вопроса ниже 👇", reply_markup=register_markup)
             await message.answer_photo("AgACAgIAAxkBAAIgUGSsMdIyvjkOU5eZl59jfXa_-Gr5AAIKyzEbrclgSWjEkpUIb5i1AQADAgADeQADLwQ")
 
