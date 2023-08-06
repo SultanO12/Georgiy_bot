@@ -377,7 +377,8 @@ async def get_msg(message: types.Message, state: FSMContext):
                 await bot.send_media_group(user[-1], media=media)
                 await asyncio.sleep(0.05)
             except:
-                await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+                # await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+                pass
     
     await bot.delete_message(chat_id=message.from_user.id, message_id=sms.message_id)
     await state.finish()
@@ -404,7 +405,9 @@ async def get_msg(message: types.Message, state: FSMContext):
                 await bot.send_photo(user[-1], photo=photo_id, caption=caption)
                 await asyncio.sleep(0.05)
             except:
-                await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+                # await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+                pass
+
     elif message.text:
         msg = message.text
 
@@ -413,7 +416,8 @@ async def get_msg(message: types.Message, state: FSMContext):
                 await bot.send_message(user[-1], msg)
                 await asyncio.sleep(0.05)
             except:
-                await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+                # await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+                pass
     else:
         video_id = message.video.file_id
         caption = message.caption
@@ -423,7 +427,8 @@ async def get_msg(message: types.Message, state: FSMContext):
                 await bot.send_video(user[-1], video=video_id, caption=caption)
                 await asyncio.sleep(0.05)
             except:
-                await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+                # await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+                pass
 
     await bot.delete_message(chat_id=message.from_user.id, message_id=sms.message_id)
     await state.finish()
