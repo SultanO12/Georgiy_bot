@@ -353,36 +353,41 @@ async def rass(message: types.Message, state: FSMContext):
 @dp.message_handler(content_types=['text'], state=GetMessage.msg2)
 async def get_msg(message: types.Message, state: FSMContext):
     photo_ids = message.text.split()
-    await state.update_data({"photo_ids":photo_ids})
-    await message.answer("Отправтье описание:")
-    await GetMessage.caption.set()
+    if len(photo_ids) <= 10:
+        await state.update_data({"photo_ids":photo_ids})
+        await message.answer("Отправтье описание:")
+        await GetMessage.caption.set()
+    else:
+        await message.answer("Нельзя отправлять больше 10 фотографий.")
+    
 
 @dp.message_handler(content_types=['text'], state=GetMessage.caption)
 async def get_msg(message: types.Message, state: FSMContext): 
     data = await state.get_data()
-    photo_ids = data['photo_ids'][:-1]
-    photo_id_caption = photo_ids[-1]
-    caption = message.text
-
-    sms = await message.answer("Рассылка начался...")
-    users = await db.select_all_users()
-
-    media = types.MediaGroup()
-    for photo_id in photo_ids:
-        media.attach_photo(photo=photo_id)
-    media.attach_photo(photo=photo_id_caption, caption=caption)
+    photo_ids = data['photo_ids']
+    if len(photo_ids) <= 10:
+        photo_id_caption = photo_ids.pop()
+        caption = message.text
     
-    for user in users:
-            try:
-                await bot.send_media_group(user[-1], media=media)
-                await asyncio.sleep(0.05)
-            except:
-                # await message.answer(f"Рассылка не отправлено id - {user[-1]}")
-                pass
-    
-    await bot.delete_message(chat_id=message.from_user.id, message_id=sms.message_id)
-    await state.finish()
-    await message.answer("Рассылка успешно отправлена! ✅", reply_markup=main_admin_markup)
+        sms = await message.answer("Рассылка начался...")
+        users = await db.select_all_users()
+
+        media = types.MediaGroup()
+        for photo_id in photo_ids:
+            media.attach_photo(photo=photo_id)
+        media.attach_photo(photo=photo_id_caption, caption=caption)
+
+        for user in users:
+                try:
+                    await bot.send_media_group(user[-1], media=media)
+                    await asyncio.sleep(0.05)
+                except:
+                    # await message.answer(f"Рассылка не отправлено id - {user[-1]}")
+                    pass
+        
+        await bot.delete_message(chat_id=message.from_user.id, message_id=sms.message_id)
+        await state.finish()
+        await message.answer("Рассылка успешно отправлена! ✅", reply_markup=main_admin_markup)
 
 @dp.message_handler(text="🗣 Рассылка", user_id=ADMINS)
 async def send_mg(message: types.Message, state: FSMContext):
