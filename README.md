@@ -1,2 +1,2 @@
-# Aiogram-Template
-Pythonda Aiogramdan foydalanib bot yaratish uchun shablon
+# Aiogram
+This bot was written to order, and by agreement, the bot files are publicly available
