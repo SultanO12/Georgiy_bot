@@ -48,6 +48,7 @@ async def do_admin_panel(message: types.Message, state: FSMContext):
         await message.answer_document(file)
 
 @dp.message_handler(text="/set_aks", user_id=ADMINS, state='*')
+@dp.message_handler(text="📌 Текст акции", user_id=ADMINS, state='*')
 async def update_aks(message: types.Message, state: FSMContext):
     await message.answer("Text:")
     await CreatCatAks.capton.set()
@@ -61,6 +62,22 @@ async def update_aks(message: types.Message, state: FSMContext):
     else:
         await db.add_infomation3(caption=message.text)
         await message.answer("Акция добавлен")
+    await state.finish()
+
+@dp.message_handler(text="Текст после регистрации", user_id=ADMINS, state='*')
+async def update_aks(message: types.Message, state: FSMContext):
+    await message.answer("Text:")
+    await Text_Get_Priz.capton.set()
+
+@dp.message_handler(user_id=ADMINS, state=Text_Get_Priz.capton)
+async def update_aks(message: types.Message, state: FSMContext):
+    aks = await db.select_all_infomation4()
+    if aks:
+        await db.update_infomation4(id=aks['id'], caption=message.text)
+        await message.answer("Текст обновлен")
+    else:
+        await db.add_infomation4(caption=message.text)
+        await message.answer("Текст добавлен")
     await state.finish()
 
 @dp.message_handler(text="/cleandb", user_id=ADMINS)

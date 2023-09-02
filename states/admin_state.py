@@ -19,3 +19,7 @@ class CreatCatRaz(StatesGroup):
 class CreatCatAks(StatesGroup):
     title = State()
     capton = State()
+
+class Text_Get_Priz(StatesGroup):
+    title = State()
+    capton = State()

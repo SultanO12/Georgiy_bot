@@ -111,6 +111,31 @@ class Database:
         """
         await self.execute(sql, execute=True)
 
+    async def create_table_infomation4(self):
+        sql = """
+        CREATE TABLE IF NOT EXISTS register_text (
+        id SERIAL PRIMARY KEY,
+        caption text NOT NULL
+        );  
+        """
+        await self.execute(sql, execute=True)
+
+    async def delete_info4(self, title):
+        sql = "DELETE FROM register_text WHERE title=$1"
+        return await self.execute(sql, title, execute=True)
+    
+    async def update_infomation4(self, id, caption):
+        sql = "UPDATE register_text SET caption=$2 WHERE id=$1 returning *"
+        return await self.execute(sql, id, caption, fetchrow=True)
+
+    async def add_infomation4(self, caption):
+        sql = "INSERT INTO register_text (caption) VALUES($1) returning *"
+        return await self.execute(sql, caption, fetchrow=True)
+
+    async def select_all_infomation4(self):
+        sql = "SELECT * FROM register_text"
+        return await self.execute(sql, fetchrow=True)
+
     async def create_table_register_info(self):
         sql = """
         CREATE TABLE IF NOT EXISTS RegInfor (
